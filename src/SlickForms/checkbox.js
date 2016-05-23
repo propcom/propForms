@@ -39,6 +39,14 @@ class SF_Checkbox {
 
 		let marker = element.parentNode.querySelectorAll('.checkbox__mark')[0];
 
+		if(!marker) {
+
+			PF_util.log(`Cannot find 'checkbox__mark' in your 'checkbox__wrap'`, `warn`);
+
+			return;
+
+		}
+
 		if(element.checked) {
 
 			PF_util.addClass(marker, 'is-active');
