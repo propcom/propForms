@@ -37,27 +37,23 @@ class SF_Select {
 
 	}
 
-	static wrap(element) {
+	static setLabel(element, value) {
 
-		element.outerHTML = '<div class="select__wrap">' + element.outerHTML + '<div class="select__label">' + element.value + '</div></div>';
+		if(element.parentNode.querySelectorAll('.select__label')[0]) {
 
-	}
+			element.parentNode.querySelectorAll('.select__label')[0].innerHTML = value;
 
-	bind(element) {
+		} else {
 
-		if(PF_util.searchArray(this.bound, element)) {
-
-			return;
+			PF_util.log(`Cannot find 'select__label' in your 'select__wrap'`, `warn`);
 
 		}
 
-		this.bound.push(element);
+	}
 
-		element.addEventListener('change', () => {
+	static wrap(element) {
 
-			SF_Select.check(element);
-
-		});
+		element.outerHTML = '<div class="select__wrap">' + element.outerHTML + '<div class="select__label">' + element.value + '</div></div>';
 
 	}
 
@@ -83,17 +79,21 @@ class SF_Select {
 
 	}
 
-	static setLabel(element, value) {
+	bind(element) {
 
-		if(element.parentNode.querySelectorAll('.select__label')[0]) {
+		if(PF_util.searchArray(this.bound, element) === true) {
 
-			element.parentNode.querySelectorAll('.select__label')[0].innerHTML = value;
-
-		} else {
-
-			PF_util.log(`Cannot find 'select__label' in your 'select__wrap'`, `warn`);
+			return;
 
 		}
+
+		this.bound.push(element);
+
+		element.addEventListener('change', () => {
+
+			SF_Select.check(element);
+
+		});
 
 	}
 

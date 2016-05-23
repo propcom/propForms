@@ -68,7 +68,7 @@ class SF_Checkbox {
 
 	bind(element) {
 
-		if(PF_util.searchArray(this.bound, element)) {
+		if(PF_util.searchArray(this.bound, element) === true) {
 
 			return;
 
