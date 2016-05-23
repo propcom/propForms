@@ -31,7 +31,7 @@ class SF_Checkbox {
 
 	static wrap(element) {
 
-		element.outerHTML = '<div class="checkbox__wrap">'+element.outerHTML+'<div class="checkbox__mark"></div></div>';
+		element.outerHTML = `<span class="checkbox__wrap">${element.outerHTML}<span class="checkbox__mark"></span></span>`;
 
 	}
 
@@ -42,18 +42,17 @@ class SF_Checkbox {
 		if(!marker) {
 
 			PF_util.log(`Cannot find 'checkbox__mark' in your 'checkbox__wrap'`, `warn`);
-
 			return;
 
 		}
 
 		if(element.checked) {
 
-			PF_util.addClass(marker, 'is-active');
+			PF_util.addClass(marker, 'checkbox__mark--active');
 
 		} else {
 
-			PF_util.removeClass(marker, 'is-active');
+			PF_util.removeClass(marker, 'checkbox__mark--active');
 
 		}
 

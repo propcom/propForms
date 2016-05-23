@@ -1,7 +1,7 @@
 'use strict';
 
 import PF_util from './PF_util';
-import SF from './SlickForms/SF';
+import PF_core from './PF_core';
 
 class PF {
 
@@ -11,9 +11,9 @@ class PF {
 
 	}
 
-	constructor(element, options = {}) {
+	constructor(elements, options = {}) {
 
-		this.element = element;
+		this.elements = elements;
 		this.defaults = {
 
 			slick: {
@@ -34,9 +34,7 @@ class PF {
 
 		});
 
-		this.SlickForms = new SF(this.settings.slick);
-
-		return this;
+		return new PF_core(this.elements, this.settings);
 
 	}
 
