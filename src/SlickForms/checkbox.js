@@ -6,24 +6,32 @@ class SF_Checkbox {
 
 	constructor() {
 
+		this.bound = [];
 		this.elements = document.getElementsByTagName('input');
+
+		this.skin();
+
+	}
+
+	skin() {
 
 		for(var i = 0; i < this.elements.length; i++) {
 
-			if(this.elements[i].type !== 'checkbox') {
+			if(this.elements[i].type !== 'checkbox' && this.elements[i].type !== 'radio') {
 
 				continue;
 
 			}
 
-			if(!PF_util.hasClass(this.elements[i].parentNode, 'checkbox__wrap')) {
+			if(!PF_util.hasClass(this.elements[i].parentNode, `${this.elements[i].type}__wrap`)) {
 
 				SF_Checkbox.wrap(this.elements[i]);
 
 			}
 
 			SF_Checkbox.check(this.elements[i]);
-			SF_Checkbox.bind(this.elements[i]);
+
+			this.bind(this.elements[i]);
 
 		}
 
@@ -31,38 +39,52 @@ class SF_Checkbox {
 
 	static wrap(element) {
 
-		element.outerHTML = `<span class="checkbox__wrap">${element.outerHTML}<span class="checkbox__mark"></span></span>`;
+		element.outerHTML = `<span class="${element.type}__wrap">${element.outerHTML}<span class="${element.type}__mark"></span></span>`;
 
 	}
 
 	static check(element) {
 
-		let marker = element.parentNode.querySelectorAll('.checkbox__mark')[0];
+		let marker = element.parentNode.querySelectorAll(`.${element.type}__mark`)[0];
 
 		if(!marker) {
 
-			PF_util.log(`Cannot find 'checkbox__mark' in your 'checkbox__wrap'`, `warn`);
+			PF_util.log(`Cannot find '${element.type}__mark' in your '${element.type}__wrap'`, `warn`);
 			return;
 
 		}
 
 		if(element.checked) {
 
-			PF_util.addClass(marker, 'checkbox__mark--active');
+			PF_util.addClass(marker, `${element.type}__mark--active`);
 
 		} else {
 
-			PF_util.removeClass(marker, 'checkbox__mark--active');
+			PF_util.removeClass(marker, `${element.type}__mark--active`);
 
 		}
 
 	}
 
-	static bind(element) {
+	bind(element) {
+
+		if(PF_util.searchArray(this.bound, element)) {
+
+			return;
+
+		}
+
+		this.bound.push(element);
 
 		element.addEventListener('change', () => {
 
-			SF_Checkbox.check(element);
+			let group = document.getElementsByName(element.getAttribute('name'));
+
+			for(let i = 0, l = group.length; i < l; i++) {
+
+				SF_Checkbox.check(group[i]);
+
+			}
 
 		});
 

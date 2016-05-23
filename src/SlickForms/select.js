@@ -6,7 +6,14 @@ class SF_Select {
 
 	constructor() {
 
+		this.bound = [];
 		this.elements = document.getElementsByTagName('select');
+
+		this.skin();
+
+	}
+
+	skin() {
 
 		for(var i = 0; i < this.elements.length; i++) {
 
@@ -23,7 +30,8 @@ class SF_Select {
 			}
 
 			SF_Select.check(this.elements[i]);
-			SF_Select.bind(this.elements[i]);
+
+			this.bind(this.elements[i]);
 
 		}
 
@@ -31,11 +39,19 @@ class SF_Select {
 
 	static wrap(element) {
 
-		element.outerHTML = '<div class="select__wrap">'+element.outerHTML+'<div class="select__label">'+element.value+'</div></div>';
+		element.outerHTML = '<div class="select__wrap">' + element.outerHTML + '<div class="select__label">' + element.value + '</div></div>';
 
 	}
 
-	static bind(element) {
+	bind(element) {
+
+		if(PF_util.searchArray(this.bound, element)) {
+
+			return;
+
+		}
+
+		this.bound.push(element);
 
 		element.addEventListener('change', () => {
 

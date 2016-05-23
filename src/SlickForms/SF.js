@@ -12,15 +12,13 @@ class SF {
 
 		this.select = this.settings.select ? new SF_Select() : null;
 		this.checkbox = this.settings.checkbox ? new SF_Checkbox() : null;
-		this.radio = this.settings.radio ? new SF_Radio() : null;
 
 	}
 
 	reSkin() {
 
-		this.select.constructor();
-		this.checkbox.constructor();
-		this.radio.constructor();
+		this.select.skin();
+		this.checkbox.skin();
 
 	}
 
