@@ -4,9 +4,10 @@ import PF_util from '../PF_util';
 
 class SF_Select {
 
-	constructor() {
+	constructor(options) {
 
 		this.bound = [];
+		this.options = options;
 		this.elements = document.getElementsByTagName('select');
 
 		this.skin();
@@ -17,7 +18,7 @@ class SF_Select {
 
 		for(var i = 0; i < this.elements.length; i++) {
 
-			if(this.elements[i].getAttribute('ng-model')) {
+			if(PF_util.searchArray(this.options.exclude, this.elements[i]) === true) {
 
 				continue;
 
@@ -53,7 +54,7 @@ class SF_Select {
 
 	static wrap(element) {
 
-		element.outerHTML = '<div class="select__wrap">' + element.outerHTML + '<div class="select__label">' + element.value + '</div></div>';
+		element.outerHTML = '<span class="select__wrap">' + element.outerHTML + '<span class="select__label">' + element.value + '</span></span>';
 
 	}
 

@@ -2,7 +2,6 @@
 
 import SF_Select from './select';
 import SF_Checkbox from './checkbox';
-import SF_Radio from './radio';
 
 class SF {
 
@@ -10,8 +9,8 @@ class SF {
 
 		this.settings = options;
 
-		this.select = this.settings.select ? new SF_Select() : null;
-		this.checkbox = this.settings.checkbox ? new SF_Checkbox() : null;
+		this.select = new SF_Select(options);
+		this.checkbox = new SF_Checkbox(options);
 
 	}
 

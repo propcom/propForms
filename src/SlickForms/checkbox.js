@@ -4,9 +4,10 @@ import PF_util from '../PF_util';
 
 class SF_Checkbox {
 
-	constructor() {
+	constructor(options) {
 
 		this.bound = [];
+		this.options = options;
 		this.elements = document.getElementsByTagName('input');
 
 		this.skin();
@@ -16,6 +17,12 @@ class SF_Checkbox {
 	skin() {
 
 		for(var i = 0; i < this.elements.length; i++) {
+
+			if(PF_util.searchArray(this.options.exclude, this.elements[i]) === true) {
+
+				continue;
+
+			}
 
 			if(this.elements[i].type !== 'checkbox' && this.elements[i].type !== 'radio') {
 

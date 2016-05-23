@@ -4,10 +4,7 @@
 
 		slick: {
 
-			select: true,
-			radio: true,
-			checkbox: true,
-			file: true
+			exclude: document.querySelectorAll('.no-wrap')
 
 		}
 

@@ -18,10 +18,7 @@ class PF {
 
 			slick: {
 
-				select: true,
-				radio: true,
-				checkbox: true,
-				file: true
+				exclude: []
 
 			}
 
