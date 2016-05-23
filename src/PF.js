@@ -1,7 +1,7 @@
 'use strict';
 
 import PF_util from './PF_util';
-import SF from './SF';
+import SF from './SlickForms/SF';
 
 class PF {
 

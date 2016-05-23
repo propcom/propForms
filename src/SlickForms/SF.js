@@ -1,14 +1,13 @@
 'use strict';
 
-import SF_Select from './SlickForms/select';
+import SF_Select from './select';
 
 class SF {
 
 	constructor(options) {
 
 		this.settings = options;
-
-		this.select = new SF_Select();
+		this.select = this.settings.select ? new SF_Select() : null;
 
 	}
 
