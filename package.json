@@ -1,6 +1,6 @@
 {
-  "name": "zRS4",
-  "version": "4.0.1",
+  "name": "propForms",
+  "version": "2.0.0",
   "description": "zRS4",
   "main": "server/bin/www.js",
   "scripts": {
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/WsCandy/zRS4.git"
+    "url": "https://github.com/propcom/propForms.git"
   },
   "dependencies": {},
   "author": "Samuel Woodbridge",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/WsCandy/zRS4/issues"
+    "url": "https://github.com/propcom/propForms/issues"
   },
-  "homepage": "https://github.com/WsCandy/zRS4",
+  "homepage": "https://github.com/propcom/propForms",
   "devDependencies": {
     "babel": "^6.3.26",
     "babel-core": "^6.3.26",
