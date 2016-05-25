@@ -7,7 +7,7 @@ gulp.task('default', function() {
 	webpack({
 
 		watch: true,
-		entry: `${process.env.PWD}/src/PF.js`,
+		entry: `${process.env.PWD}/src/PropForms/PF.js`,
 		output: {
 
 			path: `${process.env.PWD}/dist/`,

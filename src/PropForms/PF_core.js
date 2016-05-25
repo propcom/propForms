@@ -1,6 +1,5 @@
 'use strict';
 
-import SF from './SlickForms/SF';
 import PF_public from './PF_public';
 
 class PF_core {
@@ -9,8 +8,6 @@ class PF_core {
 
 		this.elements = elements;
 		this.options = options;
-
-		this.SlickForms = new SF(this.options.slick);
 
 		return new PF_public(this);
 

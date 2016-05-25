@@ -1,13 +1,13 @@
 ;(function(window) {
 
-	window.propForms = new PF('form', {
+	var forms = document.querySelectorAll('.js-propform'),
+		propForms = new PF(forms, {}),
+		slickForms = new SF({
 
-		slick: {
-
-			exclude: document.querySelectorAll('.no-wrap')
-
-		}
+		exclude: document.querySelectorAll('.no-wrap')
 
 	});
+
+	console.log(propForms, slickForms);
 
 })(window);

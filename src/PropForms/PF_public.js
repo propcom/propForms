@@ -4,9 +4,9 @@ class PF_public {
 
 	constructor(core) {
 
-		this.reSkin = () => {
+		this.public = () => {
 
-			core.SlickForms.reSkin();
+
 
 		}
 

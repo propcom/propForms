@@ -1,5 +1,6 @@
 'use strict';
 
+import SF from './../SlickForms/SF';
 import PF_util from './PF_util';
 import PF_core from './PF_core';
 
@@ -14,13 +15,8 @@ class PF {
 	constructor(elements, options = {}) {
 
 		this.elements = elements;
+		this.instances = {};
 		this.defaults = {
-
-			slick: {
-
-				exclude: []
-
-			}
 
 		};
 
@@ -31,7 +27,21 @@ class PF {
 
 		});
 
-		return new PF_core(this.elements, this.settings);
+		this.setInstances();
+
+		return this.instances;
+
+	}
+
+	setInstances() {
+
+		for(var i = 0, l = this.elements.length; i < l; i++) {
+
+			let id = this.elements[i].getAttribute('id') || i;
+
+			this.instances[id] = new PF_core(this.elements[i], this.settings);
+
+		}
 
 	}
 
@@ -40,3 +50,4 @@ class PF {
 export default PF;
 
 window.PF = PF;
+window.SF = SF;

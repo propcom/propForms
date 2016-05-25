@@ -1,6 +1,6 @@
 'use strict';
 
-import PF_util from '../PF_util';
+import PF_util from '../PropForms/PF_util';
 
 class SF_Select {
 
