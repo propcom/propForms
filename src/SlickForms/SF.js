@@ -1,7 +1,7 @@
 'use strict';
 
-import SF_Select from './select';
-import SF_Checkbox from './checkbox';
+import SF_Select from './SF_select';
+import SF_Checkbox from './SF_checkbox';
 
 class SF {
 
