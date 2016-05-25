@@ -4,11 +4,17 @@ class PF_public {
 
 	constructor(core) {
 
-		this.public = () => {
+		this.enable = () => {
 
+			core.disable(false);
 
+		};
 
-		}
+		this.disable = () => {
+
+			core.disable(true);
+
+		};
 
 	}
 
