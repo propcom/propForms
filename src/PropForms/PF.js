@@ -14,6 +14,8 @@ class PF {
 
 	constructor(elements, options = {}) {
 
+		console.log("lalal");
+
 		this.elements = elements;
 		this.instances = {};
 		this.defaults = {
