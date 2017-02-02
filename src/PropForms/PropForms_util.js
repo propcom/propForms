@@ -1,6 +1,5 @@
 //@flow
 
-import { Settings } from './PropForms_types';
 import PropForms from './PropForms';
 
 class PropForms_util {
@@ -11,13 +10,13 @@ class PropForms_util {
 
 	}
 
-	static setOptions(objects: Settings): Settings {
+	static setOptions(objects: {defaults: Settings, updates: Settings}): Settings {
 
 		let settings: Settings = objects.defaults;
 
 		if(!objects.updates) {
 
-			return;
+			return objects.defaults;
 
 		}
 

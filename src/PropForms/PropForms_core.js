@@ -1,6 +1,5 @@
 //@flow
 
-import { Settings } from './PropForms_types';
 import PropForms_public from './PropForms_public';
 
 class PropForms_core {

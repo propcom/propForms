@@ -1,7 +1,0 @@
-type Settings = {
-
-
-
-};
-
-export { Settings };

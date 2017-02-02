@@ -1,11 +1,7 @@
 //@flow
 
-import { Settings } from './PropForms_types';
 import PropForms_util from './PropForms_util';
 import PropForms_core from './PropForms_core';
-import PropForms_public from './PropForms_public';
-
-type Instances = {[key: string | number] : PropForms_public};
 
 class PropForms {
 
