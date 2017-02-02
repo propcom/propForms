@@ -9,4 +9,6 @@
 
 	window.forms = new PropForms(forms, {});
 
+	console.log(window.forms);
+
 })(window);

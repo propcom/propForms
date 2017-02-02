@@ -3,6 +3,10 @@
 import PropForms_util from './PropForms_util';
 import PropForms_core from './PropForms_core';
 
+type Settings = {
+
+};
+
 class PropForms {
 
 	static version() {
@@ -11,7 +15,12 @@ class PropForms {
 
 	}
 
-	constructor(elements, options = {}) {
+	elements: HTMLElement | NodeList<*>;
+	defaults: Settings;
+	settings: Settings;
+	instances: {[key: string | number] : Class<PropForms_core>};
+
+	constructor(elements: HTMLElement | NodeList<*>, options: Settings = {}) {
 
 		this.elements = elements;
 		this.instances = {};
@@ -34,11 +43,19 @@ class PropForms {
 
 	setInstances() {
 
-		for(let i = 0, l = this.elements.length; i < l; i++) {
+		if(this.elements instanceof NodeList) {
 
-			let id = this.elements[i].getAttribute('id') || i;
+			for(let i = 0, l = this.elements.length; i < l; i++) {
 
-			this.instances[id] = new PropForms_core(this.elements[i], this.settings);
+				let id: string | number = this.elements[i].getAttribute('id') || i;
+
+				this.instances[id] = new PropForms_core(this.elements[i], this.settings);
+
+			}
+
+		} else {
+
+			this.instances[this.elements.getAttribute('id') || 0] = new PropForms_core(this.elements, this.settings);
 
 		}
 
