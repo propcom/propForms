@@ -1,16 +1,19 @@
+//@flow
+
+import { Settings } from './PropForms_types';
 import PropForms from './PropForms';
 
 class PropForms_util {
 
-	static log(message, type = `log`) {
+	static log(message, type = `log`): void {
 
 		console[type](`[PropForms - ${PropForms.version()}]: ${message}`);
 
 	}
 
-	static setOptions(objects) {
+	static setOptions(objects: Settings): Settings {
 
-		let settings = objects.defaults;
+		let settings: Settings = objects.defaults;
 
 		if(!objects.updates) {
 
@@ -39,7 +42,7 @@ class PropForms_util {
 
 	}
 
-	static addClass(element, className) {
+	static addClass(element: HTMLElement, className: string): void {
 
 		if(element.classList) {
 
@@ -53,7 +56,7 @@ class PropForms_util {
 
 	}
 
-	static removeClass(element, className) {
+	static removeClass(element: HTMLElement, className: string) {
 
 		if(element.classList) {
 
@@ -67,7 +70,7 @@ class PropForms_util {
 
 	}
 
-	static hasClass(element, className) {
+	static hasClass(element: HTMLElement, className: string): boolean {
 
 		if(element.classList) {
 
@@ -81,7 +84,7 @@ class PropForms_util {
 
 	}
 
-	static searchArray(array, item) {
+	static searchArray(array: Array<*>, item: any): boolean {
 
 		for(let i = 0, l = array.length; i < l; i++) {
 

@@ -1,32 +1,30 @@
 //@flow
 
+import { Settings } from './PropForms_types';
 import PropForms_util from './PropForms_util';
 import PropForms_core from './PropForms_core';
+import PropForms_public from './PropForms_public';
 
-type Settings = {
-
-};
+type Instances = {[key: string | number] : PropForms_public};
 
 class PropForms {
 
-	static version() {
+	static version(): string {
 
 		return `2.0.0`;
 
 	}
 
-	elements: HTMLElement | NodeList<*>;
+	elements: HTMLFormElement | NodeList<HTMLFormElement>;
+	instances: Instances;
 	defaults: Settings;
 	settings: Settings;
-	instances: {[key: string | number] : Class<PropForms_core>};
 
-	constructor(elements: HTMLElement | NodeList<*>, options: Settings = {}) {
+	constructor(elements: HTMLFormElement | NodeList<HTMLFormElement>, options: Settings = {}): Instances {
 
 		this.elements = elements;
 		this.instances = {};
-		this.defaults = {
-
-		};
+		this.defaults = {};
 
 		this.settings = PropForms_util.setOptions({
 
@@ -41,7 +39,7 @@ class PropForms {
 
 	}
 
-	setInstances() {
+	setInstances(): void {
 
 		if(this.elements instanceof NodeList) {
 
@@ -49,6 +47,7 @@ class PropForms {
 
 				let id: string | number = this.elements[i].getAttribute('id') || i;
 
+				//$FlowFixMe: Irrelevant Error as instanceof catches.
 				this.instances[id] = new PropForms_core(this.elements[i], this.settings);
 
 			}

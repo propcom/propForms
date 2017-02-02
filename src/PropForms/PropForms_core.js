@@ -1,8 +1,16 @@
+//@flow
+
+import { Settings } from './PropForms_types';
 import PropForms_public from './PropForms_public';
 
 class PropForms_core {
 
-	constructor(form, options) {
+	form: HTMLFormElement;
+	fields: HTMLCollection<HTMLElement>;
+	disabled: boolean;
+	options: Settings;
+
+	constructor(form: HTMLFormElement, options: Settings): PropForms_public {
 
 		this.form = form;
 		this.fields = form.elements;
@@ -21,10 +29,10 @@ class PropForms_core {
 
 	}
 
-	disable(disable = true) {
+	disable(disable: boolean = true): void {
 
 		this.disabled = disable;
-		this.form.style.opacity = (disable === false ? null : 0.3);
+		this.form.style.opacity = (disable === false ? '1.0' : '0.3');
 
 		for(let i = 0, l = this.fields.length; i < l; i++) {
 
@@ -35,7 +43,7 @@ class PropForms_core {
 
 			}
 
-			this.fields[i].setAttribute('disabled', `${disable}`);
+			this.fields[i].setAttribute('disabled', 'true');
 
 		}
 

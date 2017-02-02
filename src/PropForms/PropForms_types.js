@@ -1,0 +1,7 @@
+type Settings = {
+
+
+
+};
+
+export { Settings };
