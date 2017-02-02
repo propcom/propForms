@@ -1,8 +1,6 @@
-'use strict';
+import PropForms_util from '../PropForms/PropForms_util';
 
-import PF_util from '../PropForms/PF_util';
-
-class SF_Select {
+class SlickForms_select {
 
 	constructor(options) {
 
@@ -16,21 +14,21 @@ class SF_Select {
 
 	skin() {
 
-		for(var i = 0; i < this.elements.length; i++) {
+		for(let i = 0; i < this.elements.length; i++) {
 
-			if(PF_util.searchArray(this.options.exclude, this.elements[i]) === true) {
+			if(PropForms_util.searchArray(this.options.exclude, this.elements[i]) === true) {
 
 				continue;
 
 			}
 
-			if(!PF_util.hasClass(this.elements[i].parentNode, 'select__wrap')) {
+			if(!PropForms_util.hasClass(this.elements[i].parentNode, 'select__wrap')) {
 
-				SF_Select.wrap(this.elements[i]);
+				SlickForms_select.wrap(this.elements[i]);
 
 			}
 
-			SF_Select.check(this.elements[i]);
+			SlickForms_select.check(this.elements[i]);
 
 			this.bind(this.elements[i]);
 
@@ -46,7 +44,7 @@ class SF_Select {
 
 		} else {
 
-			PF_util.log(`Cannot find 'select__label' in your 'select__wrap'`, `warn`);
+			PropForms_util.log(`Cannot find 'select__label' in your 'select__wrap'`, `warn`);
 
 		}
 
@@ -76,13 +74,13 @@ class SF_Select {
 
 		}
 
-		SF_Select.setLabel(element, optionText);
+		SlickForms_select.setLabel(element, optionText);
 
 	}
 
 	bind(element) {
 
-		if(PF_util.searchArray(this.bound, element) === true) {
+		if(PropForms_util.searchArray(this.bound, element) === true) {
 
 			return;
 
@@ -92,7 +90,7 @@ class SF_Select {
 
 		element.addEventListener('change', () => {
 
-			SF_Select.check(element);
+			SlickForms_select.check(element);
 
 		});
 
@@ -100,4 +98,4 @@ class SF_Select {
 
 }
 
-export default SF_Select;
+export default SlickForms_select;

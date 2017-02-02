@@ -1,10 +1,10 @@
-'use strict';
+import PropForms from './PropForms';
 
-class PF_util {
+class PropForms_util {
 
 	static log(message, type = `log`) {
 
-		console[type](`[propForms - ${PF.version()}]: ${message}`);
+		console[type](`[PropForms - ${PropForms.version()}]: ${message}`);
 
 	}
 
@@ -99,4 +99,4 @@ class PF_util {
 
 }
 
-export default PF_util;
+export default PropForms_util;

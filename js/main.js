@@ -1,12 +1,12 @@
 ;(function(window) {
 
 	var forms = document.querySelectorAll('.js-propform');
-	var slickForms = new SF({
+	var style = new SlickForms({
 
 		exclude: document.querySelectorAll('.no-wrap')
 
 	});
 
-	window.propForms = new PF(forms, {});
+	window.forms = new PropForms(forms, {});
 
 })(window);

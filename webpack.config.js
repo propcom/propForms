@@ -4,7 +4,7 @@ const webpack = require('webpack');
 module.exports = {
 
 	watch: true,
-	entry: `./src/PropForms/PF.js`,
+	entry: `./index.js`,
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'PropForms.min.js'
@@ -14,7 +14,7 @@ module.exports = {
 			{
 				loader: 'babel-loader',
 				query: {
-					presets: ['es2015']
+					presets: ['es2015', 'stage-0']
 				},
 				exclude: /(node_modules|bower_components)/
 			}

@@ -1,6 +1,4 @@
-'use strict';
-
-class PF_public {
+class PropForms_public {
 
 	constructor(core) {
 
@@ -20,4 +18,4 @@ class PF_public {
 
 }
 
-export default PF_public;
+export default PropForms_public;

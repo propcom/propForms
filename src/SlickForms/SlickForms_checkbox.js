@@ -1,8 +1,6 @@
-'use strict';
+import PropForms_util from '../PropForms/PropForms_util';
 
-import PF_util from '../PropForms/PF_util';
-
-class SF_Checkbox {
+class SlickForms_checkbox {
 
 	constructor(options) {
 
@@ -16,9 +14,9 @@ class SF_Checkbox {
 
 	skin() {
 
-		for(var i = 0; i < this.elements.length; i++) {
+		for(let i = 0; i < this.elements.length; i++) {
 
-			if(PF_util.searchArray(this.options.exclude, this.elements[i]) === true) {
+			if(PropForms_util.searchArray(this.options.exclude, this.elements[i]) === true) {
 
 				continue;
 
@@ -30,13 +28,13 @@ class SF_Checkbox {
 
 			}
 
-			if(!PF_util.hasClass(this.elements[i].parentNode, `${this.elements[i].type}__wrap`)) {
+			if(!PropForms_util.hasClass(this.elements[i].parentNode, `${this.elements[i].type}__wrap`)) {
 
-				SF_Checkbox.wrap(this.elements[i]);
+				SlickForms_checkbox.wrap(this.elements[i]);
 
 			}
 
-			SF_Checkbox.check(this.elements[i]);
+			SlickForms_checkbox.check(this.elements[i]);
 
 			this.bind(this.elements[i]);
 
@@ -56,18 +54,18 @@ class SF_Checkbox {
 
 		if(!marker) {
 
-			PF_util.log(`Cannot find '${element.type}__mark' in your '${element.type}__wrap'`, `warn`);
+			PropForms_util.log(`Cannot find '${element.type}__mark' in your '${element.type}__wrap'`, `warn`);
 			return;
 
 		}
 
 		if(element.checked) {
 
-			PF_util.addClass(marker, `${element.type}__mark--active`);
+			PropForms_util.addClass(marker, `${element.type}__mark--active`);
 
 		} else {
 
-			PF_util.removeClass(marker, `${element.type}__mark--active`);
+			PropForms_util.removeClass(marker, `${element.type}__mark--active`);
 
 		}
 
@@ -75,7 +73,7 @@ class SF_Checkbox {
 
 	bind(element) {
 
-		if(PF_util.searchArray(this.bound, element) === true) {
+		if(PropForms_util.searchArray(this.bound, element) === true) {
 
 			return;
 
@@ -89,7 +87,7 @@ class SF_Checkbox {
 
 			for(let i = 0, l = group.length; i < l; i++) {
 
-				SF_Checkbox.check(group[i]);
+				SlickForms_checkbox.check(group[i]);
 
 			}
 
@@ -99,4 +97,4 @@ class SF_Checkbox {
 
 }
 
-export default SF_Checkbox;
+export default SlickForms_checkbox;

@@ -1,8 +1,6 @@
-'use strict';
+import PropForms_public from './PropForms_public';
 
-import PF_public from './PF_public';
-
-class PF_core {
+class PropForms_core {
 
 	constructor(form, options) {
 
@@ -13,13 +11,13 @@ class PF_core {
 
 		this.bindEvents();
 
-		return new PF_public(this);
+		return new PropForms_public(this);
 
 	}
 
 	bindEvents() {
 
-		this.disable();
+
 
 	}
 
@@ -45,4 +43,4 @@ class PF_core {
 
 }
 
-export default PF_core;
+export default PropForms_core;
