@@ -10,37 +10,6 @@ class PropForms_util {
 
 	}
 
-	static setOptions(objects: {defaults: Settings, updates: Settings}): Settings {
-
-		let settings: Settings = objects.defaults;
-
-		if(!objects.updates) {
-
-			return objects.defaults;
-
-		}
-
-		for(let key in objects.defaults) {
-
-			if(objects.defaults.hasOwnProperty(key)) {
-
-				if(objects.updates[key] === undefined) {
-
-					settings[key] = objects.defaults[key];
-					continue;
-
-				}
-
-				settings[key] = objects.updates[key];
-
-			}
-
-		}
-
-		return settings;
-
-	}
-
 	static addClass(element: HTMLElement, className: string): void {
 
 		if(element.classList) {
@@ -96,6 +65,35 @@ class PropForms_util {
 		}
 
 		return false;
+
+	}
+
+	static createEvent(name: string, detail: {[key: string]: any} = {}): ?Event {
+
+		let event: ?Event = null;
+
+		if(document.createEvent) {
+
+			event = document.createEvent('CustomEvent');
+			event.initCustomEvent(name, false, false, detail);
+
+		}
+
+		return event;
+
+	}
+
+	static dispatchEvent(data: {[key: string] : any}): void {
+
+		if(data.element.dispatchEvent) {
+
+			data.element.dispatchEvent(data.event);
+
+		} else if(data.element.fireEvent) {
+
+			data.element.fireEvent(data.name, data.event);
+
+		}
 
 	}
 

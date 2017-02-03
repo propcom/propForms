@@ -7,7 +7,7 @@ class PropForms_public {
 	enable: Function;
 	disable: Function;
 
-	constructor(core: PropForms_core) {
+	constructor(core: PropForms_core): PropForms_public {
 
 		this.enable = (): void => {
 

@@ -1,6 +1,5 @@
 //@flow
 
-import PropForms_util from './PropForms_util';
 import PropForms_core from './PropForms_core';
 
 class PropForms {
@@ -16,18 +15,43 @@ class PropForms {
 	defaults: Settings;
 	settings: Settings;
 
-	constructor(elements: HTMLFormElement | NodeList<HTMLFormElement>, options: Settings = {}): Instances {
+	constructor(elements: HTMLFormElement | NodeList<HTMLFormElement>, options: ?Settings = null): Instances {
 
 		this.elements = elements;
 		this.instances = {};
-		this.defaults = {};
+		this.defaults = {
+			minLengths: {
+				text: 2,
+				email: 6,
+				tel: 6,
+				password: 6
+			},
+			messages: {
+				1: `Please enter at least {n} characters`,
+				2: `Please enter a valid email address`
+			}
+		};
 
-		this.settings = PropForms_util.setOptions({
+		if(options) {
 
-			defaults: this.defaults,
-			updates: options
+			this.settings = {
+				...this.defaults,
+				...options,
+				minLengths: {
+					...this.defaults.minLengths,
+					...options.minLengths
+				},
+				messages: {
+					...this.defaults.messages,
+					...options.messages
+				}
+			}
 
-		});
+		} else {
+
+			this.settings = this.defaults;
+
+		}
 
 		this.setInstances();
 
@@ -39,11 +63,10 @@ class PropForms {
 
 		if(this.elements instanceof NodeList) {
 
-			for(let i = 0, l = this.elements.length; i < l; i++) {
+			for(let i: number = 0, l: number = this.elements.length; i < l; i++) {
 
 				let id: string | number = this.elements[i].getAttribute('id') || i;
 
-				//$FlowFixMe: Irrelevant Error as instanceof catches.
 				this.instances[id] = new PropForms_core(this.elements[i], this.settings);
 
 			}

@@ -7,7 +7,31 @@
 
 	});
 
-	window.forms = new PropForms(forms, {});
+	for(var i = 0; i < forms.length; i++) {
+
+		forms[i].addEventListener('error', function(e) {
+
+			console.log(e.detail);
+
+		});
+
+		forms[i].addEventListener('fieldError', function(e) {
+
+			console.log(e.detail);
+
+		});
+
+	}
+
+	window.forms = new PropForms(forms, {
+
+		minLengths: {
+
+			text: 2
+
+		}
+
+	});
 
 	console.log(window.forms);
 
