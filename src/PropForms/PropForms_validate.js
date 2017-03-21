@@ -70,7 +70,6 @@ class PropForms_validate {
 					name: field.name,
 					type: field.type
 				}, field.value.length >= requiredLength);
-
 			}
 
 			switch(field.type) {
@@ -90,9 +89,7 @@ class PropForms_validate {
 			}
 
 			if(this.options.validation[field.name]) {
-
 				error = this._customValidation(field);
-
 			}
 
 			this._fieldError(field, error);
@@ -115,6 +112,11 @@ class PropForms_validate {
 			passing = this.options.validation[field.name].method.bind(field)();
 		} else {
 			passing = field.value.length > this.options.minLengths[field.type]
+		}
+
+		if(typeof passing !== 'boolean') {
+			passing = true;
+			PropForms_util.log('Your custom validation method for "'+field.name+'" does not return true or false, it will always validate as true.', 'warn');
 		}
 
 		return new PropForms_error({

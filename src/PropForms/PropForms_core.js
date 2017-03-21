@@ -13,7 +13,7 @@ class PropForms_core {
 	options: Settings;
 	validation: PropForms_validate;
 
-	constructor(form: HTMLFormElement, options: Settings): PropForms_core {
+	constructor(form: HTMLFormElement, options: Settings): PropForms_public {
 
 		this.form = form;
 		this.fields = form.elements;
@@ -73,7 +73,7 @@ class PropForms_core {
 		});
 	}
 
-	submit(e: Event): void {
+	submit(e: ?Event): void {
 
 		e && e.preventDefault();
 

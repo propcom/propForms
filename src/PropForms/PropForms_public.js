@@ -6,6 +6,8 @@ class PropForms_public {
 
 	enable: Function;
 	disable: Function;
+	getErrors: Function;
+	submit: Function;
 
 	constructor(core: PropForms_core): PropForms_public {
 

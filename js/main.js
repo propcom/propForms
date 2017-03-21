@@ -25,7 +25,10 @@
 		},
 		validation: {
 			name: {
-				code: 5
+				code: 5,
+				method: function() {
+					//return true
+				}
 			}
 		}
 
