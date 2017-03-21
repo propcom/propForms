@@ -1,4 +1,5 @@
 import PropForms_public from './../PropForms/PropForms_public';
+import PropForms_error from './../PropForms/PropForms_error';
 
 declare type Settings = {
 	minLengths: {[key: string]: number};
@@ -22,5 +23,5 @@ declare type FieldError = {
 }
 
 declare type Errors = {
-	[key: any]: FieldError
+	[key: any]: PropForms_error
 }

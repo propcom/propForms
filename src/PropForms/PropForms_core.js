@@ -2,6 +2,7 @@
 
 import PropForms_public from './PropForms_public';
 import PropForms_util from './PropForms_util';
+import PropForms_error from './PropForms_error';
 
 class PropForms_core {
 
@@ -12,7 +13,7 @@ class PropForms_core {
 	disabled: boolean;
 	options: Settings;
 
-	constructor(form: HTMLFormElement, options: Settings): PropForms_public {
+	constructor(form: HTMLFormElement, options: Settings): PropForms_core {
 
 		this.form = form;
 		this.fields = form.elements;
@@ -85,24 +86,9 @@ class PropForms_core {
 		return passing;
 	}
 
-	static processError(field: HTMLTextAreaElement | HTMLInputElement | HTMLTextAreaElement, code: number, passing: boolean, message: string): ?FieldError {
+	fieldError(field: HTMLTextAreaElement | HTMLInputElement | HTMLTextAreaElement, error: ?PropForms_error): void {
 
-		if(passing === true) {
-			return null;
-		}
-
-		return {
-			code: code,
-			element: field,
-			name: field.name,
-			message: message,
-			type: field.type
-		}
-	}
-
-	fieldError(field: HTMLTextAreaElement | HTMLInputElement | HTMLTextAreaElement, error: ?FieldError): void {
-
-		if(!error) {
+		if(error === null) {
 			return;
 		}
 
@@ -130,7 +116,14 @@ class PropForms_core {
 				const message = this.options.messages[1].replace(/{(.*?)}/g, String(requiredLength));
 
 				passing = field.value.length >= requiredLength;
-				error = PropForms_core.processError(field, 1, passing, message);
+
+				error = new PropForms_error({
+					message: message,
+					code: 1,
+					field: field,
+					name: field.name,
+					type: field.type
+				}, passing);
 
 			}
 
@@ -140,7 +133,14 @@ class PropForms_core {
 					const regEx = /^([^\s\\]+)@((\[[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
 					passing = regEx.test(field.value);
-					error = PropForms_core.processError(field, 2, passing, this.options.messages[2]);
+
+					error = new PropForms_error({
+						message: this.options.messages[2],
+						code: 2,
+						field: field,
+						name: field.name,
+						type: field.type
+					}, passing);
 
 					break;
 			}
@@ -154,7 +154,13 @@ class PropForms_core {
 					passing = this.options.validation[field.name].method.bind(field)();
 				}
 
-				error = PropForms_core.processError(field, code, passing, message);
+				error = new PropForms_error({
+					message: message,
+					code: code,
+					field: field,
+					name: field.name,
+					type: field.type
+				}, passing);
 			}
 
 			this.fieldError(field, error);
