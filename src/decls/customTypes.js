@@ -16,7 +16,7 @@ declare type Instances = {
 
 declare type FieldError = {
 	code: number;
-	element: HTMLElement;
+	field: HTMLElement;
 	name: string;
 	message: string;
 	type: string;

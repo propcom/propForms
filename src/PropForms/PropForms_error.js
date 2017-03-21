@@ -5,15 +5,18 @@ class PropForms_error {
 	name: string;
 	message: string;
 	type: string;
+	passing: boolean;
 
 	constructor(details: FieldError = {}, passing: boolean): ?PropForms_error {
 
-		if(passing === true) {
-			return null;
+		this.passing = passing;
+
+		if(this.passing === true) {
+			return this;
 		}
 
 		this.code = details.code;
-		this.field = details.element;
+		this.field = details.field;
 		this.name = details.name;
 		this.message = details.message;
 		this.type = details.type;
