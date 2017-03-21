@@ -5,9 +5,7 @@ import PropForms_core from './PropForms_core';
 class PropForms {
 
 	static version(): string {
-
 		return `2.0.0`;
-
 	}
 
 	elements: HTMLFormElement | NodeList<HTMLFormElement>;
@@ -27,13 +25,14 @@ class PropForms {
 				password: 6
 			},
 			messages: {
+				0: `Please fill out this field correctly`,
 				1: `Please enter at least {n} characters`,
 				2: `Please enter a valid email address`
-			}
+			},
+			validation: {}
 		};
 
 		if(options) {
-
 			this.settings = {
 				...this.defaults,
 				...options,
@@ -46,39 +45,26 @@ class PropForms {
 					...options.messages
 				}
 			}
-
 		} else {
-
 			this.settings = this.defaults;
-
 		}
 
 		this.setInstances();
 
 		return this.instances;
-
 	}
 
 	setInstances(): void {
 
 		if(this.elements instanceof NodeList) {
-
 			for(let i: number = 0, l: number = this.elements.length; i < l; i++) {
-
 				let id: string | number = this.elements[i].getAttribute('id') || i;
-
 				this.instances[id] = new PropForms_core(this.elements[i], this.settings);
-
 			}
-
 		} else {
-
 			this.instances[this.elements.getAttribute('id') || 0] = new PropForms_core(this.elements, this.settings);
-
 		}
-
 	}
-
 }
 
 export default PropForms;

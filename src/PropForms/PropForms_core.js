@@ -23,25 +23,19 @@ class PropForms_core {
 		this.setRequiredFields();
 
 		return new PropForms_public(this);
-
 	}
 
 	bindEvents(): void {
 
 		this.form.addEventListener('submit', (e: Event) => {
-
 			this.submit(e);
-
 		});
-
 	}
 
 	setRequiredFields(): void {
-
 		// Prevent HTML5 Validation
 		this.form.setAttribute('novalidate', 'true');
 		this.requiredFields = this.form.querySelectorAll('*[required]');
-
 	}
 
 	disable(disable: boolean = true): void {
@@ -54,30 +48,22 @@ class PropForms_core {
 		for(let i = 0, l = this.fields.length; i < l; i++) {
 
 			if(disable === false) {
-
 				this.fields[i].removeAttribute('disabled');
 				continue;
-
 			}
 
 			this.fields[i].setAttribute('disabled', 'true');
-
 		}
 
 		const event: ?Event = PropForms_util.createEvent(eventName, {
-
 			form: this.form
-
 		});
 
 		PropForms_util.dispatchEvent({
-
 			name: eventName,
 			event: event,
 			element: this.form
-
 		});
-
 	}
 
 	validate(): boolean {
@@ -92,43 +78,32 @@ class PropForms_core {
 				valid: boolean = this.validateField(field);
 
 			if(valid === false) {
-
 				passing = false;
-
 			}
-
 		}
 
 		return passing;
-
 	}
 
-	processError(field: HTMLTextAreaElement | HTMLInputElement | HTMLTextAreaElement, code: number, passing: boolean, message: string): ?FieldError {
+	static processError(field: HTMLTextAreaElement | HTMLInputElement | HTMLTextAreaElement, code: number, passing: boolean, message: string): ?FieldError {
 
 		if(passing === true) {
-
 			return null;
-
 		}
 
 		return {
-
 			code: code,
 			element: field,
 			name: field.name,
 			message: message,
 			type: field.type
-
 		}
-
 	}
 
 	fieldError(field: HTMLTextAreaElement | HTMLInputElement | HTMLTextAreaElement, error: ?FieldError): void {
 
 		if(!error) {
-
 			return;
-
 		}
 
 		this.errors[field.name] = error;
@@ -136,13 +111,10 @@ class PropForms_core {
 		const event = PropForms_util.createEvent('fieldError', error);
 
 		PropForms_util.dispatchEvent({
-
 			name: 'fieldError',
 			event: event,
 			element: this.form
-
 		});
-
 	}
 
 	validateField(field: HTMLElement): boolean {
@@ -158,29 +130,37 @@ class PropForms_core {
 				const message = this.options.messages[1].replace(/{(.*?)}/g, String(requiredLength));
 
 				passing = field.value.length >= requiredLength;
-				error = this.processError(field, 1, passing, message);
+				error = PropForms_core.processError(field, 1, passing, message);
 
 			}
 
 			switch(field.type) {
 
 				case 'email':
-
 					const regEx = /^([^\s\\]+)@((\[[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
 					passing = regEx.test(field.value);
-					error = this.processError(field, 2, passing, this.options.messages[2]);
+					error = PropForms_core.processError(field, 2, passing, this.options.messages[2]);
 
 					break;
+			}
 
+			if(this.options.validation[field.name]) {
+
+				const code = this.options.validation[field.name].code;
+				const message = this.options.messages[code] ? this.options.messages[code] : this.options.messages[0];
+
+				if(typeof this.options.validation[field.name].method === 'function') {
+					passing = this.options.validation[field.name].method.bind(field)();
+				}
+
+				error = PropForms_core.processError(field, code, passing, message);
 			}
 
 			this.fieldError(field, error);
-
 		}
 
 		return passing;
-
 	}
 
 	submit(e: Event): void {
@@ -190,32 +170,23 @@ class PropForms_core {
 		console.log("submitted");
 
 		if(this.validate() === true) {
-
 			console.log("SUCCESS");
-
 		} else {
 
 			const event: ?Event = PropForms_util.createEvent('error', {
-
 				form: this.form,
 				errors: this.errors
-
 			});
 
 			PropForms_util.dispatchEvent({
-
 				name: 'error',
 				event: event,
 				element: this.form
-
 			});
 
 			console.log("FAILURE");
-
 		}
-
 	}
-
 }
 
 export default PropForms_core;

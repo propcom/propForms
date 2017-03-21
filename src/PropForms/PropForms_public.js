@@ -10,21 +10,15 @@ class PropForms_public {
 	constructor(core: PropForms_core): PropForms_public {
 
 		this.enable = (): void => {
-
 			core.disable(false);
-
 		};
 
 		this.disable = (): void => {
-
 			core.disable(true);
-
 		};
 
 		return this;
-
 	}
-
 }
 
 export default PropForms_public;

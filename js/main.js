@@ -26,9 +26,20 @@
 	window.forms = new PropForms(forms, {
 
 		minLengths: {
-
 			text: 2
+		},
+		messages: {
+			5: 'Custom validation test'
+		},
+		validation: {
+			name: {
+				code: 5,
+				method: function() {
 
+					return this.value.length > 3;
+
+				}
+			}
 		}
 
 	});
