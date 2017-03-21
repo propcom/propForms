@@ -75,7 +75,7 @@ class PropForms_core {
 
 	submit(e: Event): void {
 
-		e.preventDefault();
+		e && e.preventDefault();
 
 		console.log("submitted");
 

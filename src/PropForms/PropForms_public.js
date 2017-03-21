@@ -21,6 +21,10 @@ class PropForms_public {
 			return core.validation.errors;
 		};
 
+		this.submit = (): void => {
+			core.submit(null);
+		};
+
 		return this;
 	}
 }
