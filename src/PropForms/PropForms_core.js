@@ -1,8 +1,8 @@
 //@flow
 
-import PropForms_public from './PropForms_public';
 import PropForms_util from './PropForms_util';
 import PropForms_validate from './PropForms_validate';
+import PropForms_public from './PropForms_public';
 
 class PropForms_core {
 
@@ -20,20 +20,26 @@ class PropForms_core {
 		this.disabled = false;
 		this.options = options;
 
-		this.bindEvents();
-		this.setRequiredFields();
+		this._bindEvents();
+		this._setRequiredFields();
+
+		this.validation = new PropForms_validate({
+			requiredFields: this.requiredFields,
+			options: this.options,
+			form: this.form
+		});
 
 		return new PropForms_public(this);
 	}
 
-	bindEvents(): void {
+	_bindEvents(): void {
 
 		this.form.addEventListener('submit', (e: Event) => {
 			this.submit(e);
 		});
 	}
 
-	setRequiredFields(): void {
+	_setRequiredFields(): void {
 		// Prevent HTML5 Validation
 		this.form.setAttribute('novalidate', 'true');
 		this.requiredFields = this.form.querySelectorAll('*[required]');
@@ -72,12 +78,6 @@ class PropForms_core {
 		e.preventDefault();
 
 		console.log("submitted");
-
-		this.validation = new PropForms_validate({
-			requiredFields: this.requiredFields,
-			options: this.options,
-			form: this.form
-		});
 
 		if(this.validation.validate() === true) {
 			console.log("SUCCESS");

@@ -17,6 +17,10 @@ class PropForms_public {
 			core.disable(true);
 		};
 
+		this.getErrors = (): Errors => {
+			return core.validation.errors;
+		};
+
 		return this;
 	}
 }

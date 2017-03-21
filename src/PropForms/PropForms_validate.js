@@ -18,6 +18,8 @@ class PropForms_validate {
 
 	validate(): boolean {
 
+		this.errors = {};
+
 		let passing: boolean = true;
 
 		for(let i: number = 0, l: number = this.requiredFields.length; i < l; i++) {
