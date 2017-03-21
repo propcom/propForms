@@ -25,10 +25,7 @@
 		},
 		validation: {
 			name: {
-				code: 5,
-				method: function() {
-					return this.value.length > 3;
-				}
+				code: 5
 			}
 		}
 

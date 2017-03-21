@@ -54,8 +54,7 @@ class PropForms_validate {
 
 	_validateField(field: HTMLElement): boolean {
 
-		let passing: boolean = true,
-			error: ?FieldError;
+		let error: PropForms_error;
 
 		if(field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
 
@@ -64,15 +63,13 @@ class PropForms_validate {
 				const requiredLength = this.options.minLengths[field.type];
 				const message = this.options.messages[1].replace(/{(.*?)}/g, String(requiredLength));
 
-				passing = field.value.length >= requiredLength;
-
 				error = new PropForms_error({
 					message: message,
 					code: 1,
 					field: field,
 					name: field.name,
 					type: field.type
-				}, passing);
+				}, field.value.length >= requiredLength);
 
 			}
 
@@ -81,43 +78,53 @@ class PropForms_validate {
 				case 'email':
 					const regEx = /^([^\s\\]+)@((\[[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
-					passing = regEx.test(field.value);
-
 					error = new PropForms_error({
 						message: this.options.messages[2],
 						code: 2,
 						field: field,
 						name: field.name,
 						type: field.type
-					}, passing);
+					}, regEx.test(field.value));
 
 					break;
 			}
 
 			if(this.options.validation[field.name]) {
 
-				const code = this.options.validation[field.name].code;
-				const message = this.options.messages[code] ? this.options.messages[code] : this.options.messages[0];
+				error = this._customValidation(field);
 
-				if(typeof this.options.validation[field.name].method === 'function') {
-					passing = this.options.validation[field.name].method.bind(field)();
-				}
-
-				error = new PropForms_error({
-					message: message,
-					code: code,
-					field: field,
-					name: field.name,
-					type: field.type
-				}, passing);
 			}
 
 			this._fieldError(field, error);
-		}
 
-		return passing;
+			return error.passing;
+
+		} else {
+			return true
+		}
 	}
 
+	_customValidation(field): PropForms_error {
+
+		let passing: boolean = true;
+
+		const code = this.options.validation[field.name].code;
+		const message = this.options.messages[code] ? this.options.messages[code] : this.options.messages[0];
+
+		if(typeof this.options.validation[field.name].method === 'function') {
+			passing = this.options.validation[field.name].method.bind(field)();
+		} else {
+			passing = field.value.length > this.options.minLengths[field.type]
+		}
+
+		return new PropForms_error({
+			message: message,
+			code: code,
+			field: field,
+			name: field.name,
+			type: field.type
+		}, passing);
+	}
 }
 
 export default PropForms_validate;
