@@ -25,9 +25,9 @@ class PropForms {
 				password: 6
 			},
 			messages: {
-				0: `Please fill out this field correctly`,
-				1: `Please enter at least {n} characters`,
-				2: `Please enter a valid email address`
+				'0': `Please fill out this field correctly`,
+				'1': `Please enter at least {n} characters`,
+				'2': `Please enter a valid email address`
 			},
 			validation: {}
 		};
@@ -59,6 +59,7 @@ class PropForms {
 		if(this.elements instanceof NodeList) {
 			for(let i: number = 0, l: number = this.elements.length; i < l; i++) {
 				let id: string | number = this.elements[i].getAttribute('id') || i;
+				// $FlowFixMe: Suppressing because it's being stupid.
 				this.instances[id] = new PropForms_core(this.elements[i], this.settings);
 			}
 		} else {

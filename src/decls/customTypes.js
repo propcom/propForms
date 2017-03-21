@@ -3,7 +3,7 @@ import PropForms_error from './../PropForms/PropForms_error';
 
 declare type Settings = {
 	minLengths: {[key: string]: number};
-	messages: {[key: number]: string};
+	messages: {[key: number | string]: string};
 	validation: {[key: string]: {
 		code: number,
 		method: Function
