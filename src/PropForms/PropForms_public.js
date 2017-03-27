@@ -7,6 +7,7 @@ class PropForms_public {
 	enable: Function;
 	disable: Function;
 	getErrors: Function;
+	setAjax: Function;
 	submit: Function;
 
 	constructor(core: PropForms_core): PropForms_public {
@@ -25,6 +26,10 @@ class PropForms_public {
 
 		this.submit = (): void => {
 			core.submit(null);
+		};
+
+		this.setAjax = (enabled: boolean = true): void => {
+			core.ajax.enabled = enabled;
 		};
 
 		return this;

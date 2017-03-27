@@ -3,6 +3,7 @@
 import PropForms_util from './PropForms_util';
 import PropForms_validate from './PropForms_validate';
 import PropForms_public from './PropForms_public';
+import PropForms_ajax from './PropForms_ajax';
 
 class PropForms_core {
 
@@ -12,6 +13,7 @@ class PropForms_core {
 	disabled: boolean;
 	options: Settings;
 	validation: PropForms_validate;
+	ajax: PropForms_ajax;
 
 	constructor(form: HTMLFormElement, options: Settings): PropForms_public {
 
@@ -19,6 +21,10 @@ class PropForms_core {
 		this.fields = form.elements;
 		this.disabled = false;
 		this.options = options;
+
+		if(typeof this.options.ajax === 'function') {
+			this.ajax = new this.options.ajax();
+		}
 
 		this._bindEvents();
 		this._setRequiredFields();
@@ -75,13 +81,15 @@ class PropForms_core {
 
 	submit(e: ?Event): void {
 
-		e && e.preventDefault();
+		const valid = this.validation.validate();
 
-		console.log("submitted");
+		if(valid === true && this.ajax.enabled === true) {
+			e && e.preventDefault();
 
-		if(this.validation.validate() === true) {
-			console.log("SUCCESS");
-		} else {
+			this.ajax.send();
+
+		} else if(valid === false) {
+			e && e.preventDefault();
 
 			const event: ?Event = PropForms_util.createEvent('error', {
 				form: this.form,
@@ -93,8 +101,6 @@ class PropForms_core {
 				event: event,
 				element: this.form
 			});
-
-			console.log("FAILURE");
 		}
 	}
 }

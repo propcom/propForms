@@ -1,6 +1,7 @@
 //@flow
 
 import PropForms_core from './PropForms_core';
+import PropForms_ajax from './PropForms_ajax';
 
 class PropForms {
 
@@ -29,7 +30,8 @@ class PropForms {
 				'1': `Please enter at least {n} characters`,
 				'2': `Please enter a valid email address`
 			},
-			validation: {}
+			validation: {},
+			ajax: PropForms_ajax
 		};
 
 		if(options) {

@@ -7,7 +7,7 @@
 
 	for(var i = 0; i < forms.length; i++) {
 		forms[i].addEventListener('error', function(e) {
-			console.log(e.detail);
+			//console.log(e.detail);
 		});
 
 		forms[i].addEventListener('fieldError', function(e) {
@@ -16,22 +16,13 @@
 	}
 
 	window.forms = new PropForms(forms, {
-
 		minLengths: {
 			text: 2
 		},
 		messages: {
 			5: 'Custom validation test'
 		},
-		validation: {
-			name: {
-				code: 5,
-				method: function() {
-					return false
-				}
-			}
-		}
-
+		ajax: null
 	});
 
 	console.log(window.forms);

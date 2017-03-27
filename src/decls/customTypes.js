@@ -1,5 +1,6 @@
 import PropForms_public from './../PropForms/PropForms_public';
 import PropForms_error from './../PropForms/PropForms_error';
+import PropForms_ajax from './../PropForms/PropForms_ajax';
 
 declare type Settings = {
 	minLengths: {[key: string]: number};
@@ -7,7 +8,8 @@ declare type Settings = {
 	validation: {[key: string]: {
 		code: number,
 		method: Function
-	}}
+	}};
+	ajax: PropForms_ajax;
 };
 
 declare type Instances = {
