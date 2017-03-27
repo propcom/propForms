@@ -9,7 +9,7 @@ declare type Settings = {
 		code: number,
 		method: Function
 	}};
-	ajax: PropForms_ajax;
+	ajax: ?PropForms_ajax;
 };
 
 declare type Instances = {
