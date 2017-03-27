@@ -24,6 +24,8 @@ class PropForms_core {
 
 		if(typeof this.options.ajax === 'function') {
 			this.ajax = new this.options.ajax();
+		} else {
+			this.ajax = null;
 		}
 
 		this._bindEvents();
@@ -83,7 +85,7 @@ class PropForms_core {
 
 		const valid = this.validation.validate();
 
-		if(valid === true && this.ajax.enabled === true) {
+		if(valid === true && this.ajax && this.ajax.enabled === true) {
 			e && e.preventDefault();
 
 			this.ajax.send();
