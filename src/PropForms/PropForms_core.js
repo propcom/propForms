@@ -13,7 +13,7 @@ class PropForms_core {
 	disabled: boolean;
 	options: Settings;
 	validation: PropForms_validate;
-	ajax: PropForms_ajax;
+	ajax: ?PropForms_ajax;
 
 	constructor(form: HTMLFormElement, options: Settings): PropForms_public {
 
@@ -23,7 +23,9 @@ class PropForms_core {
 		this.options = options;
 
 		if(typeof this.options.ajax === 'function') {
-			this.ajax = new this.options.ajax();
+			this.ajax = new this.options.ajax({
+				form: this.form
+			});
 		} else {
 			this.ajax = null;
 		}

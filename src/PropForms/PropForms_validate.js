@@ -35,7 +35,7 @@ class PropForms_validate {
 		return passing;
 	}
 
-	_fieldError(field: HTMLTextAreaElement | HTMLInputElement | HTMLTextAreaElement, error: ?PropForms_error): void {
+	_fieldError(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement, error: ?PropForms_error): void {
 
 		if(error.passing === true) {
 			return;
