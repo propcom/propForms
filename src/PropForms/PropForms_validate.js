@@ -72,20 +72,18 @@ class PropForms_validate {
 				}, field.value.length >= requiredLength);
 			}
 
-			switch(field.type) {
+			if(field.type === 'email' || field.name.search(/email/g) >= 0) {
 
-				case 'email':
-					const regEx = /^([^\s\\]+)@((\[[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+				const regEx = /^([^\s\\]+)@((\[[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
-					error = new PropForms_error({
-						message: this.options.messages[2],
-						code: 2,
-						field: field,
-						name: field.name,
-						type: field.type
-					}, regEx.test(field.value));
+				error = new PropForms_error({
+					message: this.options.messages[2],
+					code: 2,
+					field: field,
+					name: field.name,
+					type: field.type
+				}, regEx.test(field.value));
 
-					break;
 			}
 
 			if(this.options.validation[field.name]) {
