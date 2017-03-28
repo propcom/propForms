@@ -59,63 +59,23 @@ class PropForms_validate {
 		if(field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
 
 			if(this.options.minLengths[field.type]) {
-
-				const requiredLength = this.options.minLengths[field.type];
-				const message = this.options.messages[1].replace(/{(.*?)}/g, String(requiredLength));
-
-				error = new PropForms_error({
-					message: message,
-					code: 1,
-					field: field,
-					name: field.name,
-					type: field.type
-				}, field.value.length >= requiredLength);
+				error = this._lengthValidation(field);
 			}
 
 			if(field.type === 'email' || field.name.search(/email/g) >= 0) {
-
-				const regEx = /^([^\s\\]+)@((\[[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-
-				error = new PropForms_error({
-					message: this.options.messages[2],
-					code: 2,
-					field: field,
-					name: field.name,
-					type: field.type
-				}, regEx.test(field.value));
+				error = this._emailValidation(field);
 			}
 
-			if(field.type === 'checkbox') {
+			switch(field.type) {
+				case 'checkbox':
+					error = this._checkboxValidation(field);
 
-				error = new PropForms_error({
-					message: this.options.messages[3],
-					code: 3,
-					field: field,
-					name: field.name,
-					type: field.type
-				}, field.checked);
-			}
+					break;
 
-			if(field.type === 'radio') {
-				let set: NodeList<HTMLElement> = this.form.elements[field.name];
+				case 'radio':
+					error = this._radioValidation(field);
 
-				if(typeof this.errors[field.name] !== 'undefined') {
-					return;
-				}
-
-				for(let i = 0; i < set.length; i++) {
-					if(set[i].checked === true) {
-						return
-					}
-				}
-
-				error = new PropForms_error({
-					message: this.options.messages[4],
-					code: 4,
-					fields: set,
-					name: field.name,
-					type: field.type
-				}, false);
+					break;
 			}
 
 			if(this.options.validation[field.name]) {
@@ -133,6 +93,67 @@ class PropForms_validate {
 		} else {
 			return true
 		}
+	}
+
+	_lengthValidation(field): PropForms_error {
+
+		const requiredLength = this.options.minLengths[field.type];
+		const message = this.options.messages[1].replace(/{(.*?)}/g, String(requiredLength));
+
+		return new PropForms_error({
+			message: message,
+			code: 1,
+			field: field,
+			name: field.name,
+			type: field.type
+		}, field.value.length >= requiredLength);
+	}
+
+	_emailValidation(field): PropForms_error {
+
+		const regEx = /^([^\s\\]+)@((\[[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+
+		return new PropForms_error({
+			message: this.options.messages[2],
+			code: 2,
+			field: field,
+			name: field.name,
+			type: field.type
+		}, regEx.test(field.value));
+	}
+
+	_checkboxValidation(field): PropForms_error {
+
+		return new PropForms_error({
+			message: this.options.messages[3],
+			code: 3,
+			field: field,
+			name: field.name,
+			type: field.type
+		}, field.checked);
+	}
+
+	_radioValidation(field): PropForms_error {
+
+		let set: NodeList<HTMLElement> = this.form.elements[field.name];
+
+		if(typeof this.errors[field.name] !== 'undefined') {
+			return;
+		}
+
+		for(let i = 0; i < set.length; i++) {
+			if(set[i].checked === true) {
+				return
+			}
+		}
+
+		return new PropForms_error({
+			message: this.options.messages[4],
+			code: 4,
+			fields: set,
+			name: field.name,
+			type: field.type
+		}, false);
 	}
 
 	_customValidation(field): PropForms_error {
