@@ -10,12 +10,13 @@ class PropForms_ajax {
 		this.enabled = true;
 		this.form = details.form;
 
-		console.log('AJAX init');
 	}
 
 	send(): void {
 
 		let data: FormData | string = this._createData();
+
+		console.log(data);
 
 		this._request().send(data);
 	}
@@ -56,9 +57,11 @@ class PropForms_ajax {
 			let field = form.elements[i];
 
 			if(field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLButtonElement) {
-				if(field instanceof  HTMLInputElement && field.type === 'checkbox') {
-					data[field.name] = field.checked;
-					break;
+				if(field instanceof HTMLInputElement && (field.type === 'checkbox' || field.type === 'radio')) {
+					if(field.checked) {
+						data[field.name] = field.value;
+					}
+					continue;
 				}
 				data[field.name] = field.value;
 			}
@@ -73,9 +76,7 @@ class PropForms_ajax {
 			}
 		}
 
-		console.log(serialised);
-
-		return serialised;
+		return `${serialised}&submitted=`;
 	}
 
 	_onLoad(e: Object): void {
