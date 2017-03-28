@@ -97,7 +97,25 @@ class PropForms_validate {
 			}
 
 			if(field.type === 'radio') {
-				console.log('field');
+				let set: NodeList<HTMLElement> = this.form.elements[field.name];
+
+				if(typeof this.errors[field.name] !== 'undefined') {
+					return;
+				}
+
+				for(let i = 0; i < set.length; i++) {
+					if(set[i].checked === true) {
+						return
+					}
+				}
+
+				error = new PropForms_error({
+					message: this.options.messages[4],
+					code: 4,
+					fields: set,
+					name: field.name,
+					type: field.type
+				}, false);
 			}
 
 			if(this.options.validation[field.name]) {

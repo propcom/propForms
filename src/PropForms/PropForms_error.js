@@ -1,7 +1,8 @@
 class PropForms_error {
 
 	code: number;
-	field: HTMLTextAreaElement | HTMLInputElement | HTMLTextAreaElement;
+	field: ?HTMLTextAreaElement | ?HTMLInputElement | ?HTMLTextAreaElement;
+	fields: ?NodeList<HTMLElement>;
 	name: string;
 	message: string;
 	type: string;
@@ -17,6 +18,7 @@ class PropForms_error {
 
 		this.code = details.code;
 		this.field = details.field;
+		this.fields = details.fields;
 		this.name = details.name;
 		this.message = details.message;
 		this.type = details.type;
