@@ -86,6 +86,17 @@ class PropForms_validate {
 
 			}
 
+			if(field.type === 'checkbox') {
+
+				error = new PropForms_error({
+					message: this.options.messages[3],
+					code: 3,
+					field: field,
+					name: field.name,
+					type: field.type
+				}, field.checked);
+			}
+
 			if(this.options.validation[field.name]) {
 				error = this._customValidation(field);
 			}

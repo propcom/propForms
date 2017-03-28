@@ -28,7 +28,8 @@ class PropForms {
 			messages: {
 				'0': `Please fill out this field correctly`,
 				'1': `Please enter at least {n} characters`,
-				'2': `Please enter a valid email address`
+				'2': `Please enter a valid email address`,
+				'3': `Please check this box to continue`
 			},
 			validation: {},
 			ajax: PropForms_ajax
