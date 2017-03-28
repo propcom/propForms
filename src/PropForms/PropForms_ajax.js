@@ -16,8 +16,6 @@ class PropForms_ajax {
 
 		let data: FormData | string = this._createData();
 
-		console.log(data);
-
 		this._request().send(data);
 	}
 

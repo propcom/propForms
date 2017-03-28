@@ -37,7 +37,7 @@ class PropForms_validate {
 
 	_fieldError(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement, error: ?PropForms_error): void {
 
-		if(error.passing === true) {
+		if(typeof error === 'undefined' || error.passing === true) {
 			return;
 		}
 
@@ -83,7 +83,6 @@ class PropForms_validate {
 					name: field.name,
 					type: field.type
 				}, regEx.test(field.value));
-
 			}
 
 			if(field.type === 'checkbox') {
@@ -97,11 +96,19 @@ class PropForms_validate {
 				}, field.checked);
 			}
 
+			if(field.type === 'radio') {
+				console.log('field');
+			}
+
 			if(this.options.validation[field.name]) {
 				error = this._customValidation(field);
 			}
 
 			this._fieldError(field, error);
+
+			if(typeof error === 'undefined') {
+				return;
+			}
 
 			return error.passing;
 
