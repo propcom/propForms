@@ -29,6 +29,9 @@ class PropForms_public {
 		};
 
 		this.setAjax = (enabled: boolean = true): void => {
+			if(!core.ajax) {
+				return;
+			}
 			core.ajax.enabled = enabled;
 		};
 

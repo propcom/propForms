@@ -15,14 +15,35 @@ class PropForms_ajax {
 
 	send(): void {
 
-		const data = this._serialise(this.form);
+		let data: FormData | string = this._createData();
+
+		this._request().send(data);
+	}
+
+	_createData(): FormData | string {
+		let data: FormData;
+
+		if(typeof FormData !== 'undefined') {
+			data = new FormData(this.form);
+			data.append('submitted', 'true');
+
+			return data;
+		} else {
+			return this._serialise(this.form);
+		}
+	}
+
+	_request(): XMLHttpRequest {
+
 		const request: XMLHttpRequest = new XMLHttpRequest();
 
 		request.open(this.form.method, this.form.action, true);
-		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		if(typeof FormData === 'undefined') {
+			request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		}
 		request.onload = this._onLoad.bind(this);
 
-		request.send(data);
+		return request;
 	}
 
 	_serialise(form: HTMLFormElement): string {
@@ -35,6 +56,10 @@ class PropForms_ajax {
 			let field = form.elements[i];
 
 			if(field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLButtonElement) {
+				if(field instanceof  HTMLInputElement && field.type === 'checkbox') {
+					data[field.name] = field.checked;
+					break;
+				}
 				data[field.name] = field.value;
 			}
 		}
@@ -42,11 +67,13 @@ class PropForms_ajax {
 		i = 0;
 		for(let key in data) {
 			if(data.hasOwnProperty(key)){
-				let character: string = i === 0 ? '?' : '&';
+				let character: string = i > 0 ? '&' : '';
 				serialised += `${character}${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`;
 				i++;
 			}
 		}
+
+		console.log(serialised);
 
 		return serialised;
 	}
