@@ -69,12 +69,10 @@ class PropForms_validate {
 			switch(field.type) {
 				case 'checkbox':
 					error = this._checkboxValidation(field);
-
 					break;
 
 				case 'radio':
 					error = this._radioValidation(field);
-
 					break;
 			}
 
