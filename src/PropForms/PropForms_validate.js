@@ -16,6 +16,21 @@ class PropForms_validate {
 		this.form = details.form;
 	}
 
+	_markError(error: PropForms_error): void {
+
+		if(typeof error.field !== 'undefined') {
+			PropForms_util.addClass(error.field, this.options.errorClass);
+		}
+
+		if(typeof error.fields !== 'undefined') {
+			PropForms_util.addClass(error.fields, this.options.errorClass);
+		}
+	}
+
+	_markPass(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement): void {
+		PropForms_util.removeClass(field, this.options.errorClass);
+	}
+
 	validate(): boolean {
 
 		this.errors = {};
@@ -38,10 +53,16 @@ class PropForms_validate {
 	_fieldError(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement, error: ?PropForms_error): void {
 
 		if(typeof error === 'undefined' || error.passing === true) {
+			if(typeof this.errors[field.name] === 'undefined') {
+				this._markPass(field);
+			}
+
 			return;
 		}
 
 		this.errors[field.name] = error;
+
+		this._markError(error);
 
 		const event = PropForms_util.createEvent('fieldError', error);
 

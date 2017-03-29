@@ -19,6 +19,7 @@ class PropForms {
 		this.elements = elements;
 		this.instances = {};
 		this.defaults = {
+			errorClass: 'propForms--error',
 			minLengths: {
 				text: 2,
 				email: 6,

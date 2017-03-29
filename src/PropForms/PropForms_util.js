@@ -8,21 +8,49 @@ class PropForms_util {
 		console[type](`[PropForms - ${PropForms.version()}]: ${message}`);
 	}
 
-	static addClass(element: HTMLElement, className: string): void {
+	static addClass(elements:  HTMLElement | NodeList<HTMLElement>, className: string): void {
 
-		if(element.classList) {
-			element.classList.add(className);
+		if(typeof elements === 'undefined') {
+			return;
+		}
+
+		let add = function(element: HTMLElement, className: string) {
+			if(element.classList) {
+				element.classList.add(className);
+			} else {
+				element.className += ` ${className}`;
+			}
+		};
+
+		if(elements instanceof HTMLElement) {
+			add(elements, className);
 		} else {
-			element.className += ` ${className}`;
+			for(let i = 0, l = elements.length; i < l; i++) {
+				add(elements[i], className);
+			}
 		}
 	}
 
-	static removeClass(element: HTMLElement, className: string) {
+	static removeClass(elements:  HTMLElement | NodeList<HTMLElement>, className: string) {
 
-		if(element.classList) {
-			element.classList.remove(className);
+		if(typeof elements === 'undefined') {
+			return;
+		}
+
+		let remove = function(element: HTMLElement, className: string) {
+			if(element.classList) {
+				element.classList.remove(className);
+			} else {
+				element.className = element.className.replace(new RegExp(`(^|\\b)${className.split(' ').join('|')}(\\b|$)`, `gi`), ' ').trim();
+			}
+		};
+
+		if(elements instanceof HTMLElement) {
+			remove(elements, className);
 		} else {
-			element.className = element.className.replace(new RegExp(`(^|\\b)${className.split(' ').join('|')}(\\b|$)`, `gi`), ' ').trim();
+			for(let i = 0, l = elements.length; i < l; i++) {
+				remove(elements[i], className);
+			}
 		}
 	}
 
