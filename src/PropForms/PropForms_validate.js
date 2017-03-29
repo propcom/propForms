@@ -28,7 +28,18 @@ class PropForms_validate {
 	}
 
 	_markPass(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement): void {
+
+		const event = PropForms_util.createEvent('fieldvalid', {
+			field: field
+		});
+
 		PropForms_util.removeClass(field, this.options.errorClass);
+
+		PropForms_util.dispatchEvent({
+			name: 'fieldvalid',
+			event: event,
+			element: this.form
+		});
 	}
 
 	validate(): boolean {
@@ -64,10 +75,10 @@ class PropForms_validate {
 
 		this._markError(error);
 
-		const event = PropForms_util.createEvent('fieldError', error);
+		const event = PropForms_util.createEvent('fielderror', error);
 
 		PropForms_util.dispatchEvent({
-			name: 'fieldError',
+			name: 'fielderror',
 			event: event,
 			element: this.form
 		});
