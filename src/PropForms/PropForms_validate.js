@@ -16,7 +16,7 @@ class PropForms_validate {
 		this.form = details.form;
 	}
 
-	_markError(error: PropForms_error): void {
+	markError(error: PropForms_error): void {
 
 		if(typeof error.field !== 'undefined') {
 			PropForms_util.addClass(error.field, this.options.errorClass);
@@ -73,7 +73,7 @@ class PropForms_validate {
 
 		this.errors[field.name] = error;
 
-		this._markError(error);
+		this.markError(error);
 
 		const event = PropForms_util.createEvent('fielderror', error);
 
@@ -184,6 +184,27 @@ class PropForms_validate {
 			name: field.name,
 			type: field.type
 		}, false);
+	}
+
+	serverValidation(element: HTMLElement) {
+
+		let field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement | NodeList<HTMLElement>;
+		let error: ?PropForms_error;
+
+		if(element instanceof HTMLTextAreaElement || element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
+
+			field = this.form.elements[element.name];
+
+			error = new PropForms_error({
+				message: this.options.messages[5],
+				code: 5,
+				field: field,
+				name: field.name,
+				type: field.type
+			});
+		}
+
+		this._fieldError(field, error);
 	}
 
 	_customValidation(field): PropForms_error {

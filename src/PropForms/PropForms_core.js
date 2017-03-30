@@ -22,14 +22,6 @@ class PropForms_core {
 		this.disabled = false;
 		this.options = options;
 
-		if(typeof this.options.ajax === 'function') {
-			this.ajax = new this.options.ajax({
-				form: this.form
-			});
-		} else {
-			this.ajax = null;
-		}
-
 		this._bindEvents();
 		this._setRequiredFields();
 
@@ -38,6 +30,16 @@ class PropForms_core {
 			options: this.options,
 			form: this.form
 		});
+
+		if(typeof this.options.ajax === 'function') {
+			this.ajax = new this.options.ajax({
+				form: this.form,
+				options: this.options,
+				validation: this.validation
+			});
+		} else {
+			this.ajax = null;
+		}
 
 		return new PropForms_public(this);
 	}
