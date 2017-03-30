@@ -31,10 +31,6 @@ class PropForms_validate {
 
 	_markPass(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement): void {
 
-		const event = PropForms_util.createEvent('fieldvalid', {
-			field: field
-		});
-
 		PropForms_util.removeClass(field, this.options.errorClass);
 
 		if(typeof this.options.parent !== undefined) {
@@ -44,12 +40,6 @@ class PropForms_validate {
 				PropForms_util.removeClass(parent, this.options.errorClass);
 			}
 		}
-
-		PropForms_util.dispatchEvent({
-			name: 'fieldvalid',
-			event: event,
-			element: this.form
-		});
 	}
 
 	validate(): boolean {
@@ -75,9 +65,19 @@ class PropForms_validate {
 
 		if(typeof error === 'undefined' || error.passing === true) {
 			if(typeof this.errors[field.name] === 'undefined') {
-				this._markPass(field);
-			}
 
+				this._markPass(field);
+
+				const event = PropForms_util.createEvent('fieldvalid', {
+					field: field
+				});
+
+				PropForms_util.dispatchEvent({
+					name: 'fieldvalid',
+					event: event,
+					element: this.form
+				});
+			}
 			return;
 		}
 
