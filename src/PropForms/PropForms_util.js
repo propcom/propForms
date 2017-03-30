@@ -8,13 +8,13 @@ class PropForms_util {
 		console[type](`[PropForms - ${PropForms.version()}]: ${message}`);
 	}
 
-	static addClass(elements:  HTMLElement | NodeList<HTMLElement>, className: string): void {
+	static addClass(elements: Element | NodeList<HTMLElement>, className: string): void {
 
 		if(typeof elements === 'undefined') {
 			return;
 		}
 
-		let add = function(element: HTMLElement, className: string) {
+		let add = function(element: Element, className: string) {
 			if(element.classList) {
 				element.classList.add(className);
 			} else {
@@ -22,7 +22,7 @@ class PropForms_util {
 			}
 		};
 
-		if(elements instanceof HTMLElement) {
+		if(elements instanceof Element) {
 			add(elements, className);
 		} else {
 			for(let i = 0, l = elements.length; i < l; i++) {
@@ -31,13 +31,13 @@ class PropForms_util {
 		}
 	}
 
-	static removeClass(elements:  HTMLElement | NodeList<HTMLElement>, className: string) {
+	static removeClass(elements: Element | NodeList<HTMLElement>, className: string) {
 
 		if(typeof elements === 'undefined') {
 			return;
 		}
 
-		let remove = function(element: HTMLElement, className: string) {
+		let remove = function(element: Element, className: string) {
 			if(element.classList) {
 				element.classList.remove(className);
 			} else {
@@ -45,7 +45,7 @@ class PropForms_util {
 			}
 		};
 
-		if(elements instanceof HTMLElement) {
+		if(elements instanceof Element) {
 			remove(elements, className);
 		} else {
 			for(let i = 0, l = elements.length; i < l; i++) {
@@ -54,7 +54,23 @@ class PropForms_util {
 		}
 	}
 
-	static hasClass(element: HTMLElement, className: string): boolean {
+	static findParent(element: Element, className: string): ?Element {
+
+		let parent: ?Element = element;
+		let node: ?Element;
+
+		while(parent) {
+			if(PropForms_util.hasClass(parent, className)) {
+				node = parent;
+				break;
+			}
+			parent = parent.parentElement;
+		}
+
+		return node;
+	}
+
+	static hasClass(element: Element, className: string): boolean {
 
 		if(element.classList) {
 			return element.classList.contains(className);
@@ -74,7 +90,7 @@ class PropForms_util {
 		return false;
 	}
 
-	static createEvent(name: string, detail: {[key: string]: any} = {}): ?Event {
+	static createEvent(name: string, detail: { [key: string]: any } = {}): ?Event {
 
 		let event: ?Event = null;
 
@@ -86,7 +102,7 @@ class PropForms_util {
 		return event;
 	}
 
-	static dispatchEvent(data: {[key: string] : any}): void {
+	static dispatchEvent(data: { [key: string]: any }): void {
 
 		if(data.element.dispatchEvent) {
 			data.element.dispatchEvent(data.event);

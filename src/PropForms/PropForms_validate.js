@@ -16,14 +16,16 @@ class PropForms_validate {
 		this.form = details.form;
 	}
 
-	markError(error: PropForms_error): void {
+	_markError(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement): void {
 
-		if(typeof error.field !== 'undefined') {
-			PropForms_util.addClass(error.field, this.options.errorClass);
-		}
+		PropForms_util.addClass(field, this.options.errorClass);
 
-		if(typeof error.fields !== 'undefined') {
-			PropForms_util.addClass(error.fields, this.options.errorClass);
+		if(typeof this.options.parent !== undefined) {
+			let parent = PropForms_util.findParent(field, this.options.parent);
+
+			if(typeof parent !== 'undefined') {
+				PropForms_util.addClass(parent, this.options.errorClass);
+			}
 		}
 	}
 
@@ -34,6 +36,14 @@ class PropForms_validate {
 		});
 
 		PropForms_util.removeClass(field, this.options.errorClass);
+
+		if(typeof this.options.parent !== undefined) {
+			let parent = PropForms_util.findParent(field, this.options.parent);
+
+			if(typeof parent !== 'undefined') {
+				PropForms_util.removeClass(parent, this.options.errorClass);
+			}
+		}
 
 		PropForms_util.dispatchEvent({
 			name: 'fieldvalid',
@@ -51,7 +61,7 @@ class PropForms_validate {
 		for(let i: number = 0, l: number = this.requiredFields.length; i < l; i++) {
 
 			const field: HTMLElement = this.requiredFields[i],
-				  valid: boolean = this._validateField(field);
+				valid: boolean = this._validateField(field);
 
 			if(valid === false) {
 				passing = false;
@@ -73,7 +83,7 @@ class PropForms_validate {
 
 		this.errors[field.name] = error;
 
-		this.markError(error);
+		this._markError(field);
 
 		const event = PropForms_util.createEvent('fielderror', error);
 
@@ -222,7 +232,7 @@ class PropForms_validate {
 
 		if(typeof passing !== 'boolean') {
 			passing = true;
-			PropForms_util.log('Your custom validation method for "'+field.name+'" does not return true or false, it will always validate as true.', 'warn');
+			PropForms_util.log('Your custom validation method for "' + field.name + '" does not return true or false, it will always validate as true.', 'warn');
 		}
 
 		return new PropForms_error({

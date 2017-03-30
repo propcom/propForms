@@ -112,8 +112,6 @@ class PropForms_ajax {
 
 	_onError(DOM: Document): void {
 
-		console.log(DOM);
-
 		const errors: NodeList<HTMLElement> = DOM.querySelectorAll(`.${this.options.errorClass}`);
 		const event: ?Event = PropForms_util.createEvent('error', {
 			form: this.form,
