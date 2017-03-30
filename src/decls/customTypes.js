@@ -1,5 +1,6 @@
 import PropForms_public from './../PropForms/PropForms_public';
-import PropForms_error from './../PropForms/PropForms_error';
+import PropForms_error from '../PropForms/model/PropForms_error';
+import PropForms_success from '../PropForms/model/PropForms_success';
 import PropForms_ajax from './../PropForms/PropForms_ajax';
 
 declare type Settings = {
@@ -28,4 +29,8 @@ declare type FieldError = {
 
 declare type Errors = {
 	[key: any]: PropForms_error
+}
+
+declare type Success = {
+	[key: any]: PropForms_success
 }

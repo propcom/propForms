@@ -1,9 +1,11 @@
-import PropForms_error from './PropForms_error';
+import PropForms_error from './model/PropForms_error';
+import PropForms_success from './model/PropForms_success';
 import PropForms_util from './PropForms_util';
 
 class PropForms_validate {
 
 	errors: Errors;
+	success: Success;
 	options: Settings;
 	form: HTMLFormElement;
 	requiredFields: NodeList<HTMLElement>;
@@ -11,6 +13,7 @@ class PropForms_validate {
 	constructor(details = {}) {
 
 		this.errors = {};
+		this.success = {};
 		this.requiredFields = details.requiredFields;
 		this.options = details.options;
 		this.form = details.form;
@@ -45,6 +48,7 @@ class PropForms_validate {
 	validate(): boolean {
 
 		this.errors = {};
+		this.success = {};
 
 		let passing: boolean = true;
 
@@ -61,29 +65,51 @@ class PropForms_validate {
 		return passing;
 	}
 
-	_fieldError(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement, error: ?PropForms_error): void {
+	_handleValid(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement) {
 
-		if(typeof error === 'undefined' || error.passing === true) {
-			if(typeof this.errors[field.name] === 'undefined') {
-
-				this._markPass(field);
-
-				const event = PropForms_util.createEvent('fieldvalid', {
-					field: field
-				});
-
-				PropForms_util.dispatchEvent({
-					name: 'fieldvalid',
-					event: event,
-					element: this.form
-				});
-			}
+		if(typeof this.success[field.name] !== 'undefined') {
 			return;
 		}
 
-		this.errors[field.name] = error;
+		let set: NodeList<HTMLElement> = this.form.elements[field.name];
+		let isSet = typeof set.length !== 'undefined';
 
-		this._markError(field);
+		if(isSet) {
+			for(let i = 0; i < set.length; i++) {
+				this._markPass(set[i]);
+			}
+		} else {
+			this._markPass(field);
+		}
+
+		const success = new PropForms_success({
+			field: isSet ? undefined : set,
+			fields: isSet ? set : undefined,
+			parent: isSet ? PropForms_util.findParent(set[0], this.options.parent) : PropForms_util.findParent(field, this.options.parent),
+			name: field.name
+		});
+
+		this.success[field.name] = success;
+
+		const event = PropForms_util.createEvent('fieldvalid', success);
+
+		PropForms_util.dispatchEvent({
+			name: 'fieldvalid',
+			event: event,
+			element: this.form
+		});
+
+	}
+
+	_handleError(error: ?PropForms_error) {
+
+		if(typeof error.fields !== 'undefined') {
+			for(let i = 0; i < error.fields.length; i++) {
+				this._markError(error.fields[i]);
+			}
+		} else {
+			this._markError(error.field);
+		}
 
 		const event = PropForms_util.createEvent('fielderror', error);
 
@@ -92,6 +118,23 @@ class PropForms_validate {
 			event: event,
 			element: this.form
 		});
+	}
+
+	_handleField(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement, error: ?PropForms_error): void {
+
+		if(typeof this.errors[field.name] !== 'undefined') {
+			return;
+		}
+
+		this.errors[field.name] = error;
+
+		if(typeof this.errors[field.name] === 'undefined' || error.passing === true) {
+
+			this._handleValid(field);
+			return;
+		}
+
+		this._handleError(error);
 	}
 
 	_validateField(field: HTMLElement): boolean {
@@ -122,7 +165,7 @@ class PropForms_validate {
 				error = this._customValidation(field);
 			}
 
-			this._fieldError(field, error);
+			this._handleField(field, error);
 
 			if(typeof error === 'undefined') {
 				return;
@@ -214,7 +257,7 @@ class PropForms_validate {
 			});
 		}
 
-		this._fieldError(field, error);
+		this._handleField(field, error);
 	}
 
 	_customValidation(field): PropForms_error {
