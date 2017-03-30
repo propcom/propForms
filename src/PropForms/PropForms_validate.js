@@ -126,9 +126,11 @@ class PropForms_validate {
 			return;
 		}
 
-		this.errors[field.name] = error;
+		if(typeof error !== 'undefined' && error.passing !== true) {
+			this.errors[field.name] = error;
+		}
 
-		if(typeof this.errors[field.name] === 'undefined' || error.passing === true) {
+		if(typeof this.errors[field.name] === 'undefined') {
 
 			this._handleValid(field);
 			return;
