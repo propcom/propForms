@@ -197,8 +197,8 @@ class PropForms_validate {
 
 			error = new PropForms_error({
 				message: this.options.messages[5],
-				code: 5,
-				field: field,
+				code: field.length > 1 ? field : undefined,
+				field: field.length > 1 ? undefined : field,
 				name: field.name,
 				type: field.type
 			});
