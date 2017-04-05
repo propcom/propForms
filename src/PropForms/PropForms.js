@@ -33,7 +33,8 @@ class PropForms {
 				'2': `Please enter a valid email address`,
 				'3': `Please check this box to continue`,
 				'4': `Please select at least one option`,
-				'5': `Server validation error`
+				'5': `Please select an option`,
+				'6': `Server validation error`
 			},
 			validation: {},
 			ajax: PropForms_ajax

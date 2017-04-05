@@ -74,6 +74,10 @@ class PropForms_validate {
 		let set: NodeList<HTMLElement> = this.form.elements[field.name];
 		let isSet = typeof set.length !== 'undefined';
 
+		if(field instanceof HTMLSelectElement) {
+			isSet = false;
+		}
+
 		if(isSet) {
 			for(let i = 0; i < set.length; i++) {
 				this._markPass(set[i]);
@@ -143,7 +147,7 @@ class PropForms_validate {
 
 		let error: PropForms_error;
 
-		if(field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+		if(field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement || field instanceof HTMLSelectElement) {
 
 			if(this.options.minLengths[field.type]) {
 				error = this._lengthValidation(field);
@@ -161,6 +165,10 @@ class PropForms_validate {
 				case 'radio':
 					error = this._radioValidation(field);
 					break;
+			}
+
+			if(field.nodeName === 'SELECT') {
+				error = this._selectValidation(field);
 			}
 
 			if(this.options.validation[field.name]) {
@@ -192,6 +200,17 @@ class PropForms_validate {
 			name: field.name,
 			type: field.type
 		}, field.value.length >= requiredLength);
+	}
+
+	_selectValidation(field): PropForms_error {
+
+		return new PropForms_error({
+			message: this.options.messages[2],
+			code: 5,
+			field: field,
+			name: field.name,
+			type: 'select'
+		}, field.value !== '');
 	}
 
 	_emailValidation(field): PropForms_error {
@@ -245,18 +264,25 @@ class PropForms_validate {
 
 		let field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement | NodeList<HTMLElement>;
 		let error: ?PropForms_error;
+		let isSet = false;
 
-		if(element instanceof HTMLTextAreaElement || element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
+		if(element instanceof HTMLTextAreaElement || element instanceof HTMLInputElement || element instanceof HTMLSelectElement) {
 
 			field = this.form.elements[element.name];
+			isSet = typeof field.length !== 'undefined';
+
+			if(field instanceof HTMLSelectElement) {
+				isSet = false;
+			}
 
 			error = new PropForms_error({
-				message: this.options.messages[5],
-				code: field.length > 1 ? field : undefined,
-				field: field.length > 1 ? undefined : field,
+				message: this.options.messages[6],
+				code: 6,
+				fields: isSet ? field : undefined,
+				field: isSet ? undefined : field,
 				name: field.name,
 				type: field.type
-			});
+			}, false);
 		}
 
 		this._handleField(field, error);
