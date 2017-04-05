@@ -196,7 +196,7 @@ class PropForms_validate {
 
 	_emailValidation(field): PropForms_error {
 
-		const regEx = /^([^\s\\]+)@((\[[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+		const regEx = /^([^\s\\]+)@((\[[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,}|[0-9]{1,3})(\]?)$/;
 
 		return new PropForms_error({
 			message: this.options.messages[2],
