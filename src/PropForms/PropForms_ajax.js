@@ -131,7 +131,19 @@ class PropForms_ajax {
 	}
 
 	_onSuccess(): void {
-		console.log('FORM SUCCESS WOO WOO');
+
+		const event: ?Event = PropForms_util.createEvent('success', {
+			form: this.form,
+			message: this.options.messages['success']
+		});
+
+		this.validation.passAll();
+
+		PropForms_util.dispatchEvent({
+			name: 'success',
+			event: event,
+			element: this.form
+		});
 	}
 
 }

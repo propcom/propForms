@@ -34,7 +34,8 @@ class PropForms {
 				'3': `Please check this box to continue`,
 				'4': `Please select at least one option`,
 				'5': `Please select an option`,
-				'6': `Server validation error`
+				'6': `Server validation error`,
+				success: 'Thank you, we will be in touch soon.'
 			},
 			validation: {},
 			ajax: PropForms_ajax

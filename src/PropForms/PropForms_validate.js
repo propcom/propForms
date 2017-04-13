@@ -314,6 +314,17 @@ class PropForms_validate {
 			type: field.type
 		}, passing);
 	}
+
+	passAll(): void {
+
+		for(let i = 0; i < this.form.elements.length; i++) {
+			let field: HTMLElement = this.form.elements[i];
+
+			if(field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLButtonElement) {
+				this._markPass(field);
+			}
+		}
+	}
 }
 
 export default PropForms_validate;
