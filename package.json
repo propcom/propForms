@@ -1,7 +1,7 @@
 {
   "name": "propForms",
   "version": "2.0.0",
-  "description": "zRS4",
+  "description": "PropForms",
   "main": "server/bin/www.js",
   "scripts": {
     "test": "node server/bin/www.js"
