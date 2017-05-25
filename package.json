@@ -1,5 +1,5 @@
 {
-  "name": "propForms",
+  "name": "propforms",
   "version": "2.0.0",
   "description": "PropForms",
   "main": "server/bin/www.js",
