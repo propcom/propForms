@@ -173,43 +173,49 @@ class PropForms_validate {
 
 	_validateField(field: HTMLElement): boolean {
 
-		let error: PropForms_error;
+		let errors: Array<PropForms_error> = [];
+		let passing: boolean = true;
 
 		if(field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement || field instanceof HTMLSelectElement) {
 
 			if(this.options.minLengths[field.type]) {
-				error = this._lengthValidation(field);
+				errors.push(this._lengthValidation(field));
 			}
 
 			if(field.type === 'email' || field.name.search(/email/g) >= 0) {
-				error = this._emailValidation(field);
+				errors.push(this._emailValidation(field));
 			}
 
 			switch(field.type) {
 				case 'checkbox':
-					error = this._checkboxValidation(field);
+					errors.push(this._checkboxValidation(field));
 					break;
 
 				case 'radio':
-					error = this._radioValidation(field);
+					errors.push(this._radioValidation(field));
 					break;
 			}
 
 			if(field.nodeName === 'SELECT') {
-				error = this._selectValidation(field);
+				errors.push(this._selectValidation(field));
 			}
 
 			if(this.options.validation[field.name]) {
-				error = this._customValidation(field);
+				errors.push(this._customValidation(field));
 			}
 
-			this._handleField(field, error);
+			for (var i = 0; i < errors.length; i++) {
+				this._handleField(field, errors[i]);
+				if (errors[i].passing === false) {
+					passing = false;
+				}
+			}
 
-			if(typeof error === 'undefined') {
+			if(errors.length === 0) {
 				return;
 			}
 
-			return error.passing;
+			return passing;
 
 		} else {
 			return true
