@@ -37,6 +37,7 @@ class PropForms {
 				'6': `Server validation error`,
 				success: 'Thank you, we will be in touch soon.'
 			},
+			tooltip: false,
 			validation: {},
 			ajax: PropForms_ajax
 		};

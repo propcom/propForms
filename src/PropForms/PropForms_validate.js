@@ -19,16 +19,34 @@ class PropForms_validate {
 		this.form = details.form;
 	}
 
-	_markError(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement): void {
+	_markError(field: HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement, message: string): void {
 
 		PropForms_util.addClass(field, this.options.errorClass);
 
-		if(typeof this.options.parent !== undefined) {
+		let tooltipLocation = field.parentNode;
+
+		if(typeof this.options.parent !== "undefined") {
 			let parent = PropForms_util.findParent(field, this.options.parent);
 
 			if(typeof parent !== 'undefined') {
 				PropForms_util.addClass(parent, this.options.errorClass);
+				tooltipLocation = parent;
 			}
+		}
+
+		if (this.options.tooltip) {
+
+			var tooltip = document.createElement('label');
+			tooltip.textContent = message;
+			tooltip.setAttribute('for', field.id);
+			PropForms_util.addClass(tooltip, 'propForms__tooltip');
+
+			var oldTooltip = tooltipLocation.querySelector('.propForms__tooltip');
+			if (oldTooltip) {
+				oldTooltip.parentNode.removeChild(oldTooltip);
+			}
+			tooltipLocation.appendChild(tooltip);
+
 		}
 	}
 
@@ -36,11 +54,21 @@ class PropForms_validate {
 
 		PropForms_util.removeClass(field, this.options.errorClass);
 
-		if(typeof this.options.parent !== undefined) {
+		let tooltipLocation = field.parentNode;
+
+		if(typeof this.options.parent !== "undefined") {
 			let parent = PropForms_util.findParent(field, this.options.parent);
 
 			if(typeof parent !== 'undefined') {
 				PropForms_util.removeClass(parent, this.options.errorClass);
+				tooltipLocation = parent;
+			}
+		}
+
+		if (this.options.tooltip) {
+			var oldTooltip = tooltipLocation.querySelector('.propForms__tooltip');
+			if (oldTooltip) {
+				oldTooltip.parentNode.removeChild(oldTooltip);
 			}
 		}
 	}
