@@ -95,19 +95,27 @@ class PropForms_ajax {
 	_onLoad(e: Object): void {
 
 		const response = e.target;
-		const header = response.getResponseHeader('PropForm');
 		const DOM: Document = new DOMParser().parseFromString(response.responseText, 'text/html');
+		const wrapper = DOM.getElementById(`${this.form.id}-wrapper`);
 
-		switch(header) {
-			case 'success':
-				this._onSuccess();
-				break;
-
-			case 'error':
-				this._onError(DOM);
-				break
+		if(wrapper === null) {
+			PropForms_util.log(`Cannot find wrapper #${this.form.id}-wrapper, please check your markup`, 'error');
+			return
 		}
 
+		const passing = wrapper.getAttribute('data-success');
+
+		switch(passing) {
+			case 'true':
+				this._onSuccess();
+				break;
+			case 'false':
+				this._onError(DOM);
+				break;
+			default:
+				PropForms_util.log(`#${this.form.id}-wrapper, does not have a data-success attribute or the value is invalid, please check your markup`, 'error');
+				break
+		}
 	}
 
 	_onError(DOM: Document): void {
