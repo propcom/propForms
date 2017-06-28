@@ -6,7 +6,7 @@ import PropForms_ajax from './PropForms_ajax';
 class PropForms {
 
 	static version(): string {
-		return `2.0.1`;
+		return `2.1.0`;
 	}
 
 	elements: HTMLFormElement | NodeList<HTMLFormElement>;
