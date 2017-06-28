@@ -1,6 +1,6 @@
 {
   "name": "propforms",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "PropForms",
   "main": "lib/index.js",
   "scripts": {
@@ -16,6 +16,9 @@
       "stage-0"
     ]
   },
+  "files": [
+    "lib"
+  ],
   "author": "Samuel Woodbridge",
   "license": "ISC",
   "bugs": {
