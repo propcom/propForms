@@ -2,15 +2,23 @@
   "name": "propforms",
   "version": "2.1.2",
   "description": "PropForms",
-  "main": "server/bin/www.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "node server/bin/www.js"
+    "prepublish": "./node_modules/.bin/babel src/ -d lib && flow-copy-source src lib"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/propcom/propForms.git"
   },
-  "dependencies": {},
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0"
+    ]
+  },
+  "files": [
+    "lib"
+  ],
   "author": "Samuel Woodbridge",
   "license": "ISC",
   "bugs": {
@@ -19,13 +27,13 @@
   "homepage": "https://github.com/propcom/propForms",
   "devDependencies": {
     "babel": "^6.5.2",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.22.1",
-    "babel-loader": "^6.2.10",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-polyfill": "^6.22.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
-    "flow-bin": "^0.38.0",
-    "webpack": "^2.2.1"
+    "flow-copy-source": "^1.2.0",
+    "flow-bin": "^0.38.0"
   }
 }
