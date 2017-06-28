@@ -8,7 +8,7 @@ class SlickForms {
         select: true,
         checkbox: true,
         file: true,
-        exclude: null,
+        exclude: [],
         fileText: {
             button: 'Choose file(s)',
             label: 'Please select a file(s)',
@@ -16,7 +16,7 @@ class SlickForms {
         }
     };
 
-    constructor(options) {
+    constructor(options = {}) {
 
         this.options = {
             ...this.defaults,
