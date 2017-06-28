@@ -2,7 +2,7 @@
 
 	var forms = document.querySelectorAll('.js-propform');
 	var style = new SlickForms({
-		exclude: document.querySelectorAll('.no-wrap')
+		//exclude: document.querySelectorAll('.no-wrap')
 	});
 
 	for(var i = 0; i < forms.length; i++) {

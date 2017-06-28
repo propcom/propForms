@@ -79,7 +79,11 @@ class PropForms_util {
 		}
 	}
 
-	static searchArray(array: Array<*>, item: any): boolean {
+	static searchArray(array: ?Array<*>, item: any): boolean {
+
+		if(!array) {
+			return false
+		}
 
 		for(let i = 0, l = array.length; i < l; i++) {
 			if(array[i] === item) {
