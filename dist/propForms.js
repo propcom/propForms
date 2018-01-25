@@ -472,7 +472,7 @@
                     field: i ? void 0 : t,
                     name: t.name,
                     type: t.type
-                }, !1)), this._handleField(t, n);
+                }, !1), this._handleField(t, n));
             }
         }, {
             key: "_customValidation",

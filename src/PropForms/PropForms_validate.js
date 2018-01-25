@@ -283,9 +283,9 @@ class PropForms_validate {
 				name: field.name,
 				type: field.type
 			}, false);
-		}
 
-		this._handleField(field, error);
+            this._handleField(field, error);
+		}
 	}
 
 	_customValidation(field): PropForms_error {
