@@ -15,10 +15,6 @@ declare type Settings = {
 	ajax: ?PropForms_ajax;
 };
 
-declare type Instances = {
-	[key: string | number] : PropForms_public;
-};
-
 declare type FieldError = {
 	code: number;
 	field: HTMLElement;

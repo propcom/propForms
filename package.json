@@ -1,6 +1,6 @@
 {
   "name": "propforms",
-  "version": "2.1.7",
+  "version": "2.2.0",
   "description": "PropForms",
   "main": "lib/index.js",
   "scripts": {

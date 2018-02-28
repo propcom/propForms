@@ -24,7 +24,7 @@
         return t.d(n, "a", n), n;
     }, t.o = function(e, t) {
         return Object.prototype.hasOwnProperty.call(e, t);
-    }, t.p = "", t(t.s = 5);
+    }, t.p = "", t(t.s = 4);
 }([ function(e, t, n) {
     "use strict";
     function i(e, t) {
@@ -147,10 +147,10 @@
         return function(t, n, i) {
             return n && e(t.prototype, n), i && e(t, i), t;
         };
-    }(), o = n(2), l = i(o), u = n(4), f = i(u), c = function() {
+    }(), o = n(5), l = i(o), u = n(3), f = i(u), c = function() {
         function e(t) {
             var n = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : null;
-            return a(this, e), this.elements = t, this.instances = {}, this.defaults = {
+            a(this, e), this.element = t, this.defaults = {
                 parent: void 0,
                 errorClass: "propForms--error",
                 minLengths: {
@@ -174,111 +174,47 @@
             }, this.settings = n ? s({}, this.defaults, n, {
                 minLengths: s({}, this.defaults.minLengths, n.minLengths),
                 messages: s({}, this.defaults.messages, n.messages)
-            }) : this.defaults, this.setInstances(), this.instances;
+            }) : this.defaults, this.core = new l.default(this.element, this.settings);
         }
         return r(e, null, [ {
             key: "version",
             value: function() {
-                return "2.1.6";
+                return "2.2.0";
             }
         } ]), r(e, [ {
-            key: "setInstances",
+            key: "enable",
             value: function() {
-                if (this.elements instanceof NodeList) for (var e = 0, t = this.elements.length; e < t; e++) {
-                    var n = this.elements[e].getAttribute("id") || e;
-                    this.instances[n] = new l.default(this.elements[e], this.settings);
-                } else this.instances[this.elements.getAttribute("id") || 0] = new l.default(this.elements, this.settings);
-            }
-        } ]), e;
-    }();
-    t.default = c;
-}, function(e, t, n) {
-    "use strict";
-    function i(e) {
-        return e && e.__esModule ? e : {
-            default: e
-        };
-    }
-    function a(e, t) {
-        if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
-    }
-    Object.defineProperty(t, "__esModule", {
-        value: !0
-    });
-    var s = function() {
-        function e(e, t) {
-            for (var n = 0; n < t.length; n++) {
-                var i = t[n];
-                i.enumerable = i.enumerable || !1, i.configurable = !0, "value" in i && (i.writable = !0), 
-                Object.defineProperty(e, i.key, i);
-            }
-        }
-        return function(t, n, i) {
-            return n && e(t.prototype, n), i && e(t, i), t;
-        };
-    }(), r = n(0), o = i(r), l = n(3), u = i(l), f = n(8), c = i(f), d = n(4), h = (i(d), 
-    function() {
-        function e(t, n) {
-            return a(this, e), this.form = t, this.fields = t.elements, this.disabled = !1, 
-            this.options = n, this._bindEvents(), this._setRequiredFields(), this.validation = new u.default({
-                requiredFields: this.requiredFields,
-                options: this.options,
-                form: this.form
-            }), "function" == typeof this.options.ajax ? this.ajax = new this.options.ajax({
-                form: this.form,
-                options: this.options,
-                validation: this.validation
-            }) : this.ajax = null, new c.default(this);
-        }
-        return s(e, [ {
-            key: "_bindEvents",
-            value: function() {
-                var e = this;
-                this.form.addEventListener("submit", function(t) {
-                    e.submit(t);
-                });
-            }
-        }, {
-            key: "_setRequiredFields",
-            value: function() {
-                this.form.setAttribute("novalidate", "true"), this.requiredFields = this.form.querySelectorAll("*[required]");
+                this.core.disable(!1);
             }
         }, {
             key: "disable",
             value: function() {
-                var e = !(arguments.length > 0 && void 0 !== arguments[0]) || arguments[0], t = this.disable ? "disable" : "enable";
-                this.disabled = e, this.form.style.opacity = !1 === e ? "1.0" : "0.3";
-                for (var n = 0, i = this.fields.length; n < i; n++) !1 !== e ? this.fields[n].setAttribute("disabled", "true") : this.fields[n].removeAttribute("disabled");
-                var a = o.default.createEvent(t, {
-                    form: this.form
-                });
-                o.default.dispatchEvent({
-                    name: t,
-                    event: a,
-                    element: this.form
-                });
+                this.core.disable(!0);
+            }
+        }, {
+            key: "getErrors",
+            value: function() {
+                return this.core.validation.errors;
             }
         }, {
             key: "submit",
-            value: function(e) {
-                var t = this.validation.validate();
-                if (!0 === t && this.ajax && !0 === this.ajax.enabled) e && e.preventDefault(), 
-                this.ajax.send(); else if (!1 === t) {
-                    e && e.preventDefault();
-                    var n = o.default.createEvent("error", {
-                        form: this.form,
-                        errors: this.validation.errors
-                    });
-                    o.default.dispatchEvent({
-                        name: "error",
-                        event: n,
-                        element: this.form
-                    });
-                }
+            value: function() {
+                this.core.submit();
+            }
+        }, {
+            key: "validate",
+            value: function() {
+                this.core.validation.validate();
+            }
+        }, {
+            key: "setAjax",
+            value: function() {
+                var e = !(arguments.length > 0 && void 0 !== arguments[0]) || arguments[0];
+                this.core.ajax && (this.core.ajax.enabled = e);
             }
         } ]), e;
-    }());
-    t.default = h;
+    }();
+    t.default = c;
 }, function(e, t, n) {
     "use strict";
     function i(e) {
@@ -523,7 +459,7 @@
         return function(t, n, i) {
             return n && e(t.prototype, n), i && e(t, i), t;
         };
-    }(), r = n(0), o = i(r), l = n(3), u = (i(l), function() {
+    }(), r = n(0), o = i(r), l = n(2), u = (i(l), function() {
         function e() {
             var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
             a(this, e), this.enabled = !0, this.form = t.form, this.validation = t.validation, 
@@ -637,9 +573,94 @@
     Object.defineProperty(t, "__esModule", {
         value: !0
     }), t.SlickForms = t.PropForms = void 0;
-    var a = n(1), s = i(a), r = n(9), o = i(r);
-    window.PropForms = s.default, window.SlickForms = o.default, t.PropForms = s.default, 
-    t.SlickForms = o.default;
+    var a = n(1), s = i(a), r = n(8), o = i(r);
+    t.PropForms = s.default, t.SlickForms = o.default;
+}, function(e, t, n) {
+    "use strict";
+    function i(e) {
+        return e && e.__esModule ? e : {
+            default: e
+        };
+    }
+    function a(e, t) {
+        if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
+    }
+    Object.defineProperty(t, "__esModule", {
+        value: !0
+    });
+    var s = function() {
+        function e(e, t) {
+            for (var n = 0; n < t.length; n++) {
+                var i = t[n];
+                i.enumerable = i.enumerable || !1, i.configurable = !0, "value" in i && (i.writable = !0), 
+                Object.defineProperty(e, i.key, i);
+            }
+        }
+        return function(t, n, i) {
+            return n && e(t.prototype, n), i && e(t, i), t;
+        };
+    }(), r = n(0), o = i(r), l = n(2), u = i(l), f = n(3), c = (i(f), function() {
+        function e(t, n) {
+            a(this, e), this.form = t, this.fields = t.elements, this.disabled = !1, this.options = n, 
+            this._bindEvents(), this._setRequiredFields(), this.validation = new u.default({
+                requiredFields: this.requiredFields,
+                options: this.options,
+                form: this.form
+            }), "function" == typeof this.options.ajax ? this.ajax = new this.options.ajax({
+                form: this.form,
+                options: this.options,
+                validation: this.validation
+            }) : this.ajax = null;
+        }
+        return s(e, [ {
+            key: "_bindEvents",
+            value: function() {
+                var e = this;
+                this.form.addEventListener("submit", function(t) {
+                    e.submit(t);
+                });
+            }
+        }, {
+            key: "_setRequiredFields",
+            value: function() {
+                this.form.setAttribute("novalidate", "true"), this.requiredFields = this.form.querySelectorAll("*[required]");
+            }
+        }, {
+            key: "disable",
+            value: function() {
+                var e = !(arguments.length > 0 && void 0 !== arguments[0]) || arguments[0], t = this.disable ? "disable" : "enable";
+                this.disabled = e, this.form.style.opacity = !1 === e ? "1.0" : "0.3";
+                for (var n = 0, i = this.fields.length; n < i; n++) !1 !== e ? this.fields[n].setAttribute("disabled", "true") : this.fields[n].removeAttribute("disabled");
+                var a = o.default.createEvent(t, {
+                    form: this.form
+                });
+                o.default.dispatchEvent({
+                    name: t,
+                    event: a,
+                    element: this.form
+                });
+            }
+        }, {
+            key: "submit",
+            value: function(e) {
+                var t = this.validation.validate();
+                if (!0 === t && this.ajax && !0 === this.ajax.enabled) e && e.preventDefault(), 
+                this.ajax.send(); else if (!1 === t) {
+                    e && e.preventDefault();
+                    var n = o.default.createEvent("error", {
+                        form: this.form,
+                        errors: this.validation.errors
+                    });
+                    o.default.dispatchEvent({
+                        name: "error",
+                        event: n,
+                        element: this.form
+                    });
+                }
+            }
+        } ]), e;
+    }());
+    t.default = c;
 }, function(e, t, n) {
     "use strict";
     function i(e, t) {
@@ -671,33 +692,6 @@
     t.default = a;
 }, function(e, t, n) {
     "use strict";
-    function i(e, t) {
-        if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
-    }
-    Object.defineProperty(t, "__esModule", {
-        value: !0
-    });
-    var a = n(2), s = (function(e) {
-        e && e.__esModule;
-    }(a), function e(t) {
-        return i(this, e), this.enable = function() {
-            t.disable(!1);
-        }, this.disable = function() {
-            t.disable(!0);
-        }, this.getErrors = function() {
-            return t.validation.errors;
-        }, this.submit = function() {
-            t.submit(null);
-        }, this.validate = function() {
-            return t.validation.validate();
-        }, this.setAjax = function() {
-            var e = !(arguments.length > 0 && void 0 !== arguments[0]) || arguments[0];
-            t.ajax && (t.ajax.enabled = e);
-        }, this;
-    });
-    t.default = s;
-}, function(e, t, n) {
-    "use strict";
     function i(e) {
         return e && e.__esModule ? e : {
             default: e
@@ -726,7 +720,7 @@
         return function(t, n, i) {
             return n && e(t.prototype, n), i && e(t, i), t;
         };
-    }(), o = n(10), l = i(o), u = n(11), f = i(u), c = n(12), d = i(c), h = function() {
+    }(), o = n(9), l = i(o), u = n(10), f = i(u), c = n(11), d = i(c), h = function() {
         function e() {
             var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
             a(this, e), this.defaults = {

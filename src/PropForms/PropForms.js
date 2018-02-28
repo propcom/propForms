@@ -6,18 +6,17 @@ import PropForms_ajax from './PropForms_ajax';
 class PropForms {
 
 	static version(): string {
-		return `2.1.6`;
+		return `2.2.0`;
 	}
 
-	elements: HTMLFormElement | NodeList<HTMLFormElement>;
-	instances: Instances;
+	element: HTMLFormElement;
+	core: PropForms_core;
 	defaults: Settings;
 	settings: Settings;
 
-	constructor(elements: HTMLFormElement | NodeList<HTMLFormElement>, options: ?Settings = null): Instances {
+	constructor(element: HTMLFormElement, options: ?Settings = null) {
 
-		this.elements = elements;
-		this.instances = {};
+		this.element = element;
 		this.defaults = {
 			parent: undefined,
 			errorClass: 'propForms--error',
@@ -58,22 +57,34 @@ class PropForms {
 			this.settings = this.defaults;
 		}
 
-		this.setInstances();
-
-		return this.instances;
+		this.core = new PropForms_core(this.element, this.settings);
 	}
 
-	setInstances(): void {
+	enable(): void {
+		this.core.disable(false)
+	}
 
-		if(this.elements instanceof NodeList) {
-			for(let i: number = 0, l: number = this.elements.length; i < l; i++) {
-				let id: string | number = this.elements[i].getAttribute('id') || i;
-				// $FlowFixMe: Suppressing because it's being stupid.
-				this.instances[id] = new PropForms_core(this.elements[i], this.settings);
-			}
-		} else {
-			this.instances[this.elements.getAttribute('id') || 0] = new PropForms_core(this.elements, this.settings);
+	disable(): void {
+		this.core.disable(true)
+	}
+
+	getErrors(): Errors {
+		return this.core.validation.errors;
+	}
+
+	submit(): void {
+		this.core.submit()
+	}
+
+	validate(): void {
+		this.core.validation.validate()
+	}
+
+	setAjax(enabled: boolean = true): void {
+		if(!this.core.ajax) {
+			return;
 		}
+		this.core.ajax.enabled = enabled;
 	}
 }
 

@@ -2,7 +2,6 @@
 
 import PropForms_util from './PropForms_util';
 import PropForms_validate from './PropForms_validate';
-import PropForms_public from './PropForms_public';
 import PropForms_ajax from './PropForms_ajax';
 
 class PropForms_core {
@@ -15,7 +14,7 @@ class PropForms_core {
 	validation: PropForms_validate;
 	ajax: ?PropForms_ajax;
 
-	constructor(form: HTMLFormElement, options: Settings): PropForms_public {
+	constructor(form: HTMLFormElement, options: Settings) {
 
 		this.form = form;
 		this.fields = form.elements;
@@ -40,8 +39,6 @@ class PropForms_core {
 		} else {
 			this.ajax = null;
 		}
-
-		return new PropForms_public(this);
 	}
 
 	_bindEvents(): void {
