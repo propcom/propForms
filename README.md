@@ -6,7 +6,7 @@
 
 PropForms is simple to install, just run one of the following commands:
 
-    npm install propforms | yarn install propforms
+    npm install propforms | yarn add propforms
     
 ## Usage
 
