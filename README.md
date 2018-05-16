@@ -19,7 +19,7 @@ To get started you will need to import `PropForms` into your `.js` file with the
 To initialise PropForms on a form simply do the following:
 
     const form = document.getElementById("my-form")
-    const forms = new PropForms(form)
+    const instance = new PropForms(form)
     
 > Note: By default PropForms will attempt to validate all form elements marked with the `required` html attribute on submission.    
 
@@ -175,7 +175,7 @@ In addition to the the options you can also customise PropForms by listening for
 Events are easily added to the form in the following manner:
 
     const form = document.getElementById("my-form")
-    const forms = new PropForms(form)
+    const instance = new PropForms(form)
     
     form.addEventListener("fielderror", e => {
         console.log(e.detail)
@@ -212,3 +212,38 @@ The `fieldvalid` event will fire for each individual field that passes validatio
 The `success` event will fire after the form has received a success message from the server.
 
 > Note: `e.detail` contains an [`Success`](#types) type.
+
+## Public Methods
+
+PropForms has a number of public methods you can call do interact with it programmatically. All of the methods can be invoked in the following manner:
+
+        const form = document.getElementById("my-form")
+        const instance = new PropForms(form)
+        
+        isntance.method()
+        
+### Methods
+
+#### `enable()`
+
+Enable will enable the form if it is disabled, an enabled form functions are normal.
+
+#### `disable()`
+
+This method will disabled the form, a disabled form has a reduced opacity and will not be interactive.
+
+#### `getErrors(): Errors`
+
+This method will return all the errors PropForms currently has.
+
+#### `submit()`
+
+This will submit the form for you.
+
+#### `validate()`
+
+Validate the form.
+
+#### `setAjax(enabled: boolean = true)`
+
+Enables/disables ajax depending on the value passed.
