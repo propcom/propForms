@@ -217,10 +217,10 @@ The `success` event will fire after the form has received a success message from
 
 PropForms has a number of public methods you can call do interact with it programmatically. All of the methods can be invoked in the following manner:
 
-        const form = document.getElementById("my-form")
-        const instance = new PropForms(form)
-        
-        isntance.method()
+    const form = document.getElementById("my-form")
+    const instance = new PropForms(form)
+    
+    isntance.method()
         
 ### Methods
 
