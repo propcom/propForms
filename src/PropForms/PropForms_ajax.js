@@ -49,11 +49,11 @@ class PropForms_ajax {
 	}
 
 	_removeEmptyFileFields(data: FormData): FormData {
-		if (typeof FormData.forEach === "undefined") {
+		if (typeof FormData.prototype.forEach === "undefined") {
 			return data;
 		}
 
-		FormData.forEach.call(data, function(value, key) {
+		FormData.prototype.forEach.call(data, function(value, key) {
 			if (value instanceof File && value.name === '') {
 				data.delete(key);
 			}
