@@ -6,7 +6,7 @@ import PropForms_ajax from './PropForms_ajax';
 class PropForms {
 
 	static version(): string {
-		return `2.2.2`;
+		return `2.2.3`;
 	}
 
 	element: HTMLFormElement;
