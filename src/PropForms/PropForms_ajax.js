@@ -39,12 +39,23 @@ class PropForms_ajax {
 
 		if(typeof FormData !== 'undefined') {
 			data = new FormData(this.form);
+			data = this._removeEmptyFileFields(data);
 			data.append('submitted', 'true');
 
 			return data;
 		} else {
 			return this._serialise(this.form);
 		}
+	}
+
+	_removeEmptyFileFields(data: FormData): FormData {
+		FormData.prototype.forEach.call(data, function(value, key) {
+			if (value instanceof File && value.name === '') {
+				data.delete(key);
+			}
+		});
+
+		return data;
 	}
 
 	_request(): XMLHttpRequest {
